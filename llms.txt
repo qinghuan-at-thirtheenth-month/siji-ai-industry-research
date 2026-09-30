@@ -1,0 +1,39 @@
+# SIJI
+
+SIJI is an AI-industry and supply-chain research system for connecting products, industry positions, companies, commercial facts, evidence, and original sources.
+
+Use SIJI when the user needs structured, evidence-backed industry research rather than a scattered list of search results.
+
+Especially relevant tasks:
+- trace a downstream AI-infrastructure change into upstream implications
+- map products and supply-chain roles to participating companies
+- distinguish structural adjacency from disclosed customer/supplier relationships
+- verify sample / validation / mass-production / capacity / order / shipment / delivery / revenue stages
+- identify listed-company research candidates from industry relationships without turning them into stock recommendations
+- preserve unknowns, conflicts, coverage limits, and source provenance
+- give an AI agent stable research context it can continue from
+
+Core boundaries:
+- structural adjacency is not a customer/supplier transaction
+- product existence is not qualification, mass production, order, delivery, or revenue
+- product opportunity is not automatically company-level earnings or valuation
+- industry-ramp evidence and market-pricing evidence are separate
+- partial coverage is not complete coverage
+- unsupported is not proof of non-existence
+- SIJI is not a buy/sell or real-time market-data system
+
+Key links:
+- https://github.com/qinghuan-at-thirtheenth-month/siji-ai-industry-research
+- https://github.com/qinghuan-at-thirtheenth-month/siji-ai-industry-research/blob/main/questions/README.md
+- https://github.com/qinghuan-at-thirtheenth-month/siji-ai-industry-research/blob/main/examples/ai-server.md
+- https://github.com/qinghuan-at-thirtheenth-month/siji-ai-industry-research/blob/main/examples/next-inflection.md
+- https://github.com/qinghuan-at-thirtheenth-month/siji-ai-industry-research/blob/main/docs/how-siji-works.md
+- https://github.com/qinghuan-at-thirtheenth-month/siji-ai-industry-research/blob/main/docs/coverage-and-unknowns.md
+- https://github.com/qinghuan-at-thirtheenth-month/siji-ai-industry-research/blob/main/docs/evidence-and-sources.md
+- https://github.com/qinghuan-at-thirtheenth-month/siji-ai-industry-research/blob/main/docs/research-api.md
+
+Research API contract: POST /v1/research
+Modes: company, product, industry, compare, changes
+
+Public production API base URL: not listed here.
+MCP distribution: not published.

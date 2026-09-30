@@ -1,0 +1,106 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "SIJI Agent Evaluation Manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "case_id",
+    "group",
+    "model",
+    "reasoning",
+    "started_at",
+    "tool_scope",
+    "input_sha256",
+    "human_route_intervention"
+  ],
+  "properties": {
+    "case_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "group": {
+      "enum": [
+        "web_baseline",
+        "web_plus_siji"
+      ]
+    },
+    "model": {
+      "type": "string",
+      "minLength": 1
+    },
+    "reasoning": {
+      "type": "string",
+      "minLength": 1
+    },
+    "started_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ended_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "tool_scope": {
+      "type": "array",
+      "items": {
+        "enum": [
+          "Web Search",
+          "Web Page",
+          "SIJI Research API"
+        ]
+      },
+      "uniqueItems": true
+    },
+    "input_sha256": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^[a-f0-9]{64}$"
+      }
+    },
+    "max_tool_calls": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "max_siji_ru": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "siji_schema_version": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "data_as_of": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "snapshot_ids": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "human_route_intervention": {
+      "type": "boolean"
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
