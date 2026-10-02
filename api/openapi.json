@@ -3,16 +3,16 @@
   "info": {
     "title": "SIJI Agent Graph API",
     "version": "siji.agent/v1",
-    "description": "Public typed research primitives over SIJI's maintained AI-industry world model."
+    "description": "Public typed research primitives over SIJI's maintained AI-industry world model. For broad research, read x-siji-onboarding and start with get_world_overview."
   },
   "paths": {
     "/v1/agent/capabilities": {
       "get": {
         "operationId": "siji_get_capabilities",
-        "summary": "Get the public SIJI Agent Graph capability catalog",
+        "summary": "Get SIJI public Agent Graph capabilities and onboarding guidance",
         "responses": {
           "200": {
-            "description": "Public capability catalog",
+            "description": "Capability catalog with schemas, recipes and interpretation rules",
             "content": {
               "application/json": {
                 "schema": {
@@ -3539,5 +3539,99 @@
         "name": "X-API-Key"
       }
     }
+  },
+  "x-siji-onboarding": {
+    "version": "siji.agent-onboarding/v1",
+    "purpose": "Use SIJI as an industry world model that expands the research space and preserves evidence semantics; do not treat it as an answer generator or stock picker.",
+    "choose_start": {
+      "broad_or_unknown_unknown": {
+        "start_with": "get_world_overview",
+        "instruction": "Read the full visible world graph before choosing familiar keywords. Build a broad candidate universe from companies, products/businesses, positions and typed relations, then decide what to verify next."
+      },
+      "known_company_or_product": {
+        "start_with": "search_entities",
+        "instruction": "Resolve the exact entity first, then reopen it and drill into graph/facts/evidence as needed."
+      }
+    },
+    "recommended_loop": [
+      "get_world_overview",
+      "form_candidate_universe",
+      "list_changes_or_search_entities",
+      "get_entities",
+      "expand_graph_or_trace_paths",
+      "get_facts",
+      "get_evidence",
+      "compare_if_needed",
+      "verify_important_branches_on_public_web",
+      "assess_market_expectations_separately"
+    ],
+    "recipes": {
+      "broad_industry_discovery": {
+        "goal": "Find product layers, bottlenecks or inflections without pre-seeding a candidate list.",
+        "sequence": [
+          "get_world_overview",
+          "list_changes",
+          "expand_graph",
+          "get_facts",
+          "get_evidence"
+        ],
+        "rule": "Graph density is a discovery signal, not a ranking score."
+      },
+      "known_entity_deep_dive": {
+        "goal": "Research a known company, product or business.",
+        "sequence": [
+          "search_entities",
+          "get_entities",
+          "expand_graph",
+          "get_facts",
+          "get_evidence"
+        ],
+        "rule": "Identity or participation alone does not prove orders, mass production, shipment or revenue."
+      },
+      "commercial_stage_verification": {
+        "goal": "Verify sample, qualification, mass production, order, shipment, delivery or revenue claims.",
+        "sequence": [
+          "search_entities",
+          "get_facts",
+          "get_evidence"
+        ],
+        "rule": "Keep each commercial stage distinct and preserve review/evidence status and time scope."
+      },
+      "multi_hop_propagation_and_compare": {
+        "goal": "Trace a change through the industry and compare explicit candidates.",
+        "sequence": [
+          "get_world_overview",
+          "trace_paths",
+          "expand_graph",
+          "get_facts",
+          "compare",
+          "get_evidence"
+        ],
+        "rule": "A graph path is not causal proof; verify important branches and alternatives independently."
+      }
+    },
+    "interpretation_rules": [
+      "graph adjacency is not a supplier/customer transaction",
+      "participation is not an order",
+      "product existence is not qualification or mass production",
+      "qualification is not mass production",
+      "mass production is not an order",
+      "order is not shipment or delivery",
+      "delivery is not revenue",
+      "nearby product maturity does not transfer to the target product",
+      "missing or partial results do not prove non-existence",
+      "review_required is not verified",
+      "industry evidence does not prove market underpricing"
+    ],
+    "web_boundary": {
+      "use_web_for": [
+        "latest events beyond the SIJI snapshot",
+        "independent original-source verification",
+        "commercialization timing and counter-evidence",
+        "market prices, valuation, expectations and crowding"
+      ],
+      "provenance_rule": "Web findings remain Web provenance until separately processed into SIJI."
+    },
+    "human_docs_path": "/research/docs"
   }
 }
