@@ -1,91 +1,156 @@
-# Research Case — Next Inflection → Market-Expectation Check
+# Flagship Case — Finding the Next AI Industry Inflection from the Whole Map
 
 ## Research question
 
-**Which AI-infrastructure product categories could ramp next, and have related listed-company expectations already become overextended?**
+> **Over the next 6–12 months, which AI-industry product layer is most likely to hit a meaningful inflection, become a hotspot or risk point, and may not yet be fully reflected in market expectations?**
 
-Initial scope: memory/HBM and advanced packaging around next-generation AI infrastructure.
+This case uses SIJI as an industry world model, then independently verifies important branches on the public Web.
 
-## Current conditional conclusion
+Evidence cutoff: **2026-10-02T01:54:55Z**
 
-Public product evidence can identify **industry research candidates**, but it cannot by itself establish that a listed security is under- or over-valued.
+SIJI world data in the case: **2026-10-01**
 
-For example:
+## 1. Start with the industry world, not a few guessed keywords
 
-- Micron disclosed HBM4 36GB 12H and 192GB SOCAMM2 in high-volume production for NVIDIA Vera Rubin in March 2026.
-- TSMC states that CoWoS-L has been in volume production since 2024.
+Before narrowing candidates, the Agent consumed the visible SIJI world overview:
 
-These facts show real product/commercial stages. They do **not** answer, on their own:
+| Visible world | Count |
+| --- | ---: |
+| Industry categories | 24 |
+| Industry positions | 85 |
+| Connected companies | 947 |
+| Products / business subjects | 1,499 |
+| Company → subject edges | 1,534 |
+| Subject → position edges | 1,533 |
+| Company ↔ company edges | 61 |
+| Position ↔ position structural edges | 36 |
+| Total typed edges | **3,164** |
 
-- whether shipment growth will accelerate over the next 6–12 months;
-- whether supply constraints will tighten or ease;
-- how much of the product opportunity maps to each listed company's earnings;
-- whether market expectations already reflect the opportunity.
+The map was screened across ten families: semiconductor inputs/equipment; EDA/compute; memory/advanced packaging/rack; board power/connectors; scale-up/network/optics; storage/data movement; facility power; cooling; cloud/training/inference/data lifecycle; demand/edge perception.
 
-Therefore the case separates two judgments.
+The map defined **what deserved to be considered** before Web verification narrowed the field. Graph density was not treated as an investment score.
 
-## 1. Industry judgment
+## 2. Final industrial candidates
 
-A product category is a stronger “next inflection” research candidate when evidence supports some combination of:
+### #1 — Rack-level 800VDC power architecture
 
-- new platform adoption;
-- sampling → qualification → volume-production progression;
-- shipment acceleration;
-- capacity expansion with a defined scope and time;
-- increasing product intensity per system;
-- a bottleneck that can be observed and later verified;
-- multiple independent demand signals.
+The near-term layer is not simply “data-center power.” It separates into:
 
-A product already in volume production is not automatically “the next breakout.” The next question is whether volume, penetration, product intensity, or constraints are changing.
+- power rack / sidecar;
+- PDU / Busway / DC distribution;
+- fast DC protection and grounding;
+- transient buffering / short-duration energy storage.
 
-## 2. Market-expectation judgment
+Public verification supports a live architecture transition: NVIDIA describes an H2-2026 MGX-compatible 800VDC power rack and a 2027 row-power-center path; Schneider separately describes rack-level power racks/sidecars as an immediate enabler.
 
-“Not overextended” is a separate market-research claim. It requires contemporaneous, comparable evidence such as:
+The world model also keeps rack power, switchgear, PDU/Busway, transformer/substation and UPS/storage as distinct positions instead of merging them into one “power” theme.
 
-- security/market identity;
-- price and relative-performance window;
-- valuation on an appropriate basis;
-- earnings or operating-expectation changes;
-- available positioning/crowding proxies;
-- the business contribution of the relevant product.
+### #2 — Context-memory / KV-cache storage
 
-No market-pricing conclusion is inferred from SIJI industry evidence alone.
+This was the most important product-layer upgrade from the whole-map view.
 
-## Public evidence baseline
+SIJI places **Huawei OceanStor M900 Context Memory Storage** in both storage and `Prefill / Decode / KV Cache` contexts. Graph paths connect the branch to Enterprise NVMe SSD, object storage and inference/KV-cache orchestration.
 
-### Micron
+Public Web verification confirms that Huawei launched M900 as a dedicated context-memory storage product for large-scale AI inference, including tiering across memory/DRAM/SSD and shared KV-cache use.
 
-Micron's March 2026 disclosure states that HBM4 36GB 12H and 192GB SOCAMM2 are in high-volume production for NVIDIA Vera Rubin.
+The resulting hypothesis is more specific than “AI inference needs more enterprise SSD”:
 
-Original source:
-<https://investors.micron.com/news/press-release/2026/Micron-in-High-Volume-Production-of-HBM4-Designed-for-NVIDIA-Vera-Rubin-PCIe-Gen6-SSD-and-SOCAMM2-03-16-2026/default.aspx>
+> **Context memory may be becoming a distinct infrastructure product layer between compute, memory, storage and inference software.**
 
-### TSMC
+Important unknown: multi-vendor or hyperscaler adoption beyond the first dedicated product systems is still limited.
 
-TSMC states that CoWoS-L started volume production in 2024.
+### #3 — Hybrid bonding / D2W metrology
 
-Original sources:
+The map and change feed expose dedicated hybrid-bonding and die-to-wafer metrology equipment inside advanced packaging.
 
-- <https://3dfabric.tsmc.com/english/dedicatedFoundry/technology/cowos.htm>
-- <https://investor.tsmc.com/static/annualReports/2024/english/index.html>
+Public evidence supports commercialization: Reuters reported Besi Q2 2026 orders of EUR292.9m and continued expansion of hybrid-bonding customers.
 
-## What would make a product candidate stronger?
+This makes hybrid bonding a strong industrial candidate, but also reduces the claim that it is still hidden from investors.
 
-A useful next verification is specific and falsifiable:
+### #4 — High-capacity CDU / liquid-cooling distribution
 
-- a new product generation moves from sample to qualification or shipment;
-- a supplier discloses a measurable capacity increase;
-- lead time / utilization / shipment evidence changes;
-- a platform vendor names a compatible product or supplier;
-- revenue mix or operating contribution becomes attributable;
-- the expected ramp fails to appear within the stated observation window.
+SIJI facts separate CDU from cold plates, TIM and facility water/rejection.
 
-## What would make the market judgment stronger?
+Vertiv publicly announced its CoolChip CDU 2300 as NVIDIA DSX Ready, with a 2.3 MW cooling-capacity specification.
 
-The market side should be checked independently, using the same `data_as_of` date as the industry conclusion. If comparable market data are unavailable or the product-to-company earnings mapping is too weak, the correct output is:
+Industrial relevance is strong; market visibility is also already high.
 
-> **Industry candidate may be valid; market-expectation conclusion is not established.**
+### #5 — CPO / silicon-photonics optical engines
 
-That is more useful than turning a supply-chain thesis into an unsupported stock call.
+SIJI separates optical modules, silicon photonics, optical engines/CPO/NPO and laser sources.
 
-See [Research Evaluation Protocol](../benchmark/README.md).
+Public evidence supports a transition toward CPO industrialization, but mature pluggable/laser production cannot be used as proof that CPO itself has reached the same mass-production stage.
+
+### #6 — 224G AEC / high-speed copper
+
+High-speed copper remains a real short-reach path and shared dependency. Its value depends on the copper-to-optics crossover in reach, power, thermal budget and system cost rather than a universal “copper wins” or “optics wins” conclusion.
+
+### #7 — Physical-AI lidar
+
+Robotics-lidar shipment growth validates a physical-AI demand branch, but it is not a shared bottleneck across the whole AI compute infrastructure.
+
+## 3. What the world model changed
+
+### It exposed a storage-to-inference bridge
+
+M900 was not treated as a generic storage product. Its placement across storage and KV-cache/inference positions changed the research question from:
+
+> “Will AI inference consume more SSD?”
+
+to:
+
+> “Is a dedicated context-memory infrastructure layer forming?”
+
+That creates a different set of next verifications: additional vendors, hyperscaler deployments, common interfaces, installed capacity, TCO and attributable revenue.
+
+### It kept product layers separate
+
+800VDC rack power, PDU/Busway, switchgear, transformer/substation and UPS/storage are related but not interchangeable.
+
+Likewise, mature EML/pluggable-optics facts do not automatically establish CPO mass production.
+
+### It constrained what could be claimed
+
+A participation or path can support an industry-placement statement without proving:
+
+- a customer order;
+- shipment volume;
+- mass production;
+- recognized revenue.
+
+Missing or partial results were not treated as proof of non-existence.
+
+## 4. Market conclusion
+
+**market_assessment = insufficient_evidence**
+
+This is deliberate.
+
+The research found strong industry transitions, but market visibility is already substantial in power, cooling, hybrid bonding, optics and enterprise storage. Context memory is newer, yet public-equity exposure and multi-vendor earnings evidence remain weak.
+
+Therefore:
+
+> **A valid industry inflection does not automatically establish an under-priced security.**
+
+## 5. Key public sources
+
+- NVIDIA — [Why Scaling AI Compute Performance Requires a New Power Architecture](https://blogs.nvidia.com/blog/800-vdc-power-architecture-ai-factory/) — 2026-08-11.
+- Schneider Electric — [5 Principles for 800 VDC in AI Data Centers](https://www.se.com/us/en/download/document/SPD_WP213_EN/) — 2026-03-02.
+- ABB — [Direct-current portfolio for AI data centers](https://new.abb.com/news/detail/139013/abbs-new-direct-current-portfolio-aims-to-rewire-ai-data-center-energy-infrastructure) — 2026-09-23.
+- Huawei — [OceanStor M900 Context Memory Storage](https://www.huawei.com/en/news/2026/9/hc-context-memory-storage) — 2026-09-17.
+- TrendForce — [AI Server Demand Sustains Memory Contract Price Increases in 4Q26](https://www.trendforce.com/presscenter/news/20260930-13258.html) — 2026-09-30.
+- Alibaba — [RTP-LLM](https://github.com/alibaba/rtp-llm) — production inference/KV-cache architecture.
+- Besi — [Q2-26 and H1-26 results](https://www.besi.com/investor-relations/press-releases/details/be-semiconductor-industries-nv-announces-q2-26-and-h1-26-results/) — 2026-07-23; Q2 orders €292.9m with strong AI/hybrid-bonding demand.
+- Vertiv — [CoolChip CDU 2300 qualified as NVIDIA DSX Ready](https://www.vertiv.com/en-us/about/news-and-events/corporate-news/2026/vertiv-coolant-distribution-unit-qualified-as-nvidia-dsx-ready-for-ai-factory-infrastructure/) — 2026-09-21.
+- Lumentum — [Enabling the Next Phase of AI Optical Infrastructure](https://www.lumentum.com/en/blog/enabling-next-phase-ai-optical-infrastructure) — 2026-04-30.
+- Hesai — [Q2/H1 2026 results](https://investor.hesaitech.com/static-files/41782b09-9c75-47ee-88ac-188e15b051a8) — 2026-08-18.
+
+## 6. What to verify next
+
+- **800VDC:** 2027 orders, supplier revenue, design wins, protection/distribution economics.
+- **Context memory:** second/third vendors, independent deployments, standard interfaces, capacity, TCO and revenue attribution.
+- **Hybrid bonding:** HBM4/HBM4E equipment shipments, throughput and yield.
+- **CDU:** orders / installed MW and whether the bottleneck moves toward facility water/rejection.
+- **CPO / 224G:** volume yield, serviceability, reach/power/cost crossover.
+
+The point of the case is not that SIJI “knows the winning answer.” The point is that the world model changes **which product layers become visible, how they are connected, and what evidence the Agent knows it must verify next**.

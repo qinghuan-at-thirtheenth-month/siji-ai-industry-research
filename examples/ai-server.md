@@ -84,6 +84,6 @@ The upstream thesis weakens if:
 
 SIJI is designed to keep the product identity, industry position, company participation, commercial stage, evidence, and source separate so an agent can continue from a known object without turning structural adjacency into a transaction claim.
 
-For evaluation, SIJI-derived facts and Web-derived facts are kept as separate provenance.
+SIJI-derived facts and Web-derived facts keep separate provenance.
 
-See [How an AI Agent Uses SIJI](agent-run/README.md) and [Evaluation Protocol](../benchmark/README.md).
+See the [Agent Guide](../docs/agent-guide.md) and [Evidence & Sources](../docs/evidence-and-sources.md).

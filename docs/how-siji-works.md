@@ -1,54 +1,67 @@
 # How SIJI Works
 
-SIJI separates **how evidence is organized** from **how a research conclusion is derived**.
+SIJI is designed as an **industry world model for research**, not an answer generator.
 
-## 1. Evidence organization
+## Start from the world when the question is broad
+
+For an open-ended question, the useful order is:
 
 ```text
-Product
-→ Complete Supply Chain
-→ Industry Position
-→ Company Participation
-→ Commercial Fact
-→ Evidence
-→ Original Source
+world overview
+→ candidate universe
+→ graph / change / entity drill-down
+→ facts and evidence
+→ public-Web verification
+→ market evidence separately
 ```
 
-This structure answers: *what object is this, where does it participate, what has been disclosed, and what supports the statement?*
+`get_world_overview` exposes the current visible company/product/business/position identities and typed relationship skeleton. It lets an Agent see the research space before it decides which keywords deserve attention.
 
-## 2. Research derivation
+For a narrow known-entity question, an Agent may start directly from entity search/get.
+
+## Evidence organization
 
 ```text
-downstream event / demand change
-→ changed product requirement or delivery constraint
-→ upstream products and cross-chain dependencies
-→ companies with specific participation evidence
+Product / business
+→ Industry position
+→ Company participation
+→ Commercial fact
+→ Evidence reference
+→ Original source
+```
+
+## Research derivation
+
+```text
+industry change
+→ affected product layer
+→ alternative / adjacent / upstream / downstream paths
+→ concrete companies and products
+→ facts and evidence
 → conditional conclusion
-→ next verification / invalidation condition
+→ next verification / invalidation signal
 ```
 
-This second chain is analytical. It must not be treated as if every graph edge proves causality.
+The second chain is analytical. A graph path is not automatically causal proof.
 
-## Research boundaries
+## Roles
 
-SIJI keeps the following distinctions explicit:
+**SIJI** provides stable identity, world structure, typed relationships, commercial facts, evidence state, coverage and source anchors.
 
-- structural adjacency ≠ direct customer/supplier transaction;
+**Public Web** provides independent freshness, original-source verification, information outside SIJI coverage, and market evidence.
+
+**The Agent** decides which branches matter, compares alternatives, preserves uncertainty, and chooses the next verification.
+
+## Hard boundaries
+
+- structural adjacency ≠ transaction;
 - product existence ≠ qualification;
 - qualification ≠ mass production;
 - mass production ≠ order;
-- order ≠ delivery;
+- order ≠ shipment/delivery;
 - delivery ≠ revenue;
-- company participation ≠ quantified operating importance;
-- unknown ≠ nonexistent;
-- partial coverage ≠ complete industry coverage.
+- nearby product maturity ≠ target product maturity;
+- unknown/partial ≠ non-existence;
+- industry evidence ≠ market-pricing evidence.
 
-## Roles of SIJI, Web, and the Agent
-
-**SIJI** provides maintained identities, product/position structure, published relationships, commercial facts, source anchors, coverage, and known gaps.
-
-**Web Search / Web Page** provides freshness, original-source verification, information outside current SIJI coverage, and independent market evidence.
-
-**The Agent** plans the research, compares paths, builds conditional conclusions, and decides what evidence should be checked next.
-
-A Web-discovered fact remains Web provenance until it is processed and published through SIJI. Agent analysis remains analysis; it is not rewritten as a SIJI fact.
+See [Agent Guide](agent-guide.md) and the [flagship case](../examples/next-inflection.md).

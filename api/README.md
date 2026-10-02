@@ -1,13 +1,8 @@
-# SIJI Research API Contract
+# SIJI Agent Graph machine-readable contracts
 
-[openapi.json](openapi.json) describes SIJI's public research contract:
+- `capabilities.json` — current public operation catalog, schemas, semantics and capability boundaries.
+- `openapi.json` — OpenAPI 3.1 contract for the public Agent Graph surface.
 
-```text
-POST /v1/research
-```
+The current public research surface has nine typed primitives, led by `get_world_overview` for broad world-model-first research.
 
-The file includes the request/response schemas required by this route and the documented API-key security scheme.
-
-The contract can be reviewed independently of a live service. A public production base URL is not listed in this repository; use only an endpoint published through an official SIJI channel.
-
-See [Research API](../docs/research-api.md) for the human-readable guide.
+A production base URL is not embedded here. Use only an endpoint published through an official SIJI channel.

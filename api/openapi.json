@@ -1,713 +1,3542 @@
 {
-  "components": {
-    "schemas": {
-      "ResearchData": {
-        "additionalProperties": false,
-        "properties": {
-          "changes": {
-            "items": {
-              "additionalProperties": true,
-              "type": "object"
-            },
-            "title": "Changes",
-            "type": "array"
-          },
-          "claims": {
-            "items": {
-              "additionalProperties": true,
-              "type": "object"
-            },
-            "title": "Claims",
-            "type": "array"
-          },
-          "companies": {
-            "items": {
-              "additionalProperties": true,
-              "type": "object"
-            },
-            "title": "Companies",
-            "type": "array"
-          },
-          "conflicts": {
-            "items": {
-              "additionalProperties": true,
-              "type": "object"
-            },
-            "title": "Conflicts",
-            "type": "array"
-          },
-          "milestones": {
-            "items": {
-              "additionalProperties": true,
-              "type": "object"
-            },
-            "title": "Milestones",
-            "type": "array"
-          },
-          "overview": {
-            "additionalProperties": true,
-            "title": "Overview",
-            "type": "object"
-          },
-          "positions": {
-            "items": {
-              "additionalProperties": true,
-              "type": "object"
-            },
-            "title": "Positions",
-            "type": "array"
-          },
-          "products": {
-            "items": {
-              "additionalProperties": true,
-              "type": "object"
-            },
-            "title": "Products",
-            "type": "array"
-          },
-          "relationships": {
-            "items": {
-              "additionalProperties": true,
-              "type": "object"
-            },
-            "title": "Relationships",
-            "type": "array"
-          },
-          "sources": {
-            "items": {
-              "additionalProperties": true,
-              "type": "object"
-            },
-            "title": "Sources",
-            "type": "array"
-          },
-          "unknowns": {
-            "items": {
-              "additionalProperties": true,
-              "type": "object"
-            },
-            "title": "Unknowns",
-            "type": "array"
-          }
-        },
-        "title": "ResearchData",
-        "type": "object"
-      },
-      "ResearchPacket": {
-        "additionalProperties": false,
-        "properties": {
-          "change_state": {
-            "anyOf": [
-              {
-                "enum": [
-                  "baseline",
-                  "changed",
-                  "unchanged",
-                  "unavailable"
-                ],
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Change State"
-          },
-          "coverage": {
-            "additionalProperties": true,
-            "title": "Coverage",
-            "type": "object"
-          },
-          "data": {
-            "$ref": "#/components/schemas/ResearchData"
-          },
-          "data_as_of": {
-            "title": "Data As Of",
-            "type": "string"
-          },
-          "delivery_id": {
-            "title": "Delivery Id",
-            "type": "string"
-          },
-          "generated_at": {
-            "format": "date-time",
-            "title": "Generated At",
-            "type": "string"
-          },
-          "mode": {
-            "enum": [
-              "company",
-              "product",
-              "industry",
-              "compare",
-              "changes"
-            ],
-            "title": "Mode",
-            "type": "string"
-          },
-          "packet_version": {
-            "title": "Packet Version",
-            "type": "string"
-          },
-          "pagination": {
-            "$ref": "#/components/schemas/ResearchPagination"
-          },
-          "request_id": {
-            "title": "Request Id",
-            "type": "string"
-          },
-          "response_hash": {
-            "title": "Response Hash",
-            "type": "string"
-          },
-          "schema_version": {
-            "const": "siji.research/v1",
-            "default": "siji.research/v1",
-            "title": "Schema Version",
-            "type": "string"
-          },
-          "scope": {
-            "additionalProperties": true,
-            "title": "Scope",
-            "type": "object"
-          },
-          "snapshot_id": {
-            "title": "Snapshot Id",
-            "type": "string"
-          },
-          "status": {
-            "enum": [
-              "complete",
-              "partial",
-              "unsupported"
-            ],
-            "title": "Status",
-            "type": "string"
-          },
-          "subject": {
-            "additionalProperties": true,
-            "title": "Subject",
-            "type": "object"
-          },
-          "usage": {
-            "$ref": "#/components/schemas/ResearchUsage"
-          }
-        },
-        "required": [
-          "request_id",
-          "delivery_id",
-          "mode",
-          "status",
-          "snapshot_id",
-          "packet_version",
-          "generated_at",
-          "data_as_of",
-          "subject",
-          "scope",
-          "data",
-          "coverage",
-          "pagination",
-          "usage",
-          "response_hash"
-        ],
-        "title": "ResearchPacket",
-        "type": "object"
-      },
-      "ResearchPagination": {
-        "additionalProperties": false,
-        "properties": {
-          "has_more": {
-            "title": "Has More",
-            "type": "boolean"
-          },
-          "next_cursor": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Next Cursor"
-          },
-          "next_since": {
-            "anyOf": [
-              {
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Next Since"
-          }
-        },
-        "required": [
-          "has_more"
-        ],
-        "title": "ResearchPagination",
-        "type": "object"
-      },
-      "ResearchQuery": {
-        "additionalProperties": false,
-        "properties": {
-          "checkpoint": {
-            "anyOf": [
-              {
-                "maxLength": 4096,
-                "minLength": 8,
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Checkpoint"
-          },
-          "company_id": {
-            "anyOf": [
-              {
-                "maxLength": 128,
-                "minLength": 1,
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Company Id"
-          },
-          "dimension": {
-            "anyOf": [
-              {
-                "const": "commercial_progress",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Dimension"
-          },
-          "market": {
-            "anyOf": [
-              {
-                "maxLength": 32,
-                "minLength": 1,
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Market"
-          },
-          "name": {
-            "anyOf": [
-              {
-                "maxLength": 128,
-                "minLength": 2,
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Name"
-          },
-          "network_id": {
-            "default": "net_aiinfra_23chain_global",
-            "maxLength": 128,
-            "minLength": 1,
-            "title": "Network Id",
-            "type": "string"
-          },
-          "product_id": {
-            "anyOf": [
-              {
-                "maxLength": 128,
-                "minLength": 1,
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Product Id"
-          },
-          "question": {
-            "anyOf": [
-              {
-                "maxLength": 300,
-                "minLength": 2,
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Question"
-          },
-          "since": {
-            "anyOf": [
-              {
-                "format": "date-time",
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Since"
-          },
-          "stock_code": {
-            "anyOf": [
-              {
-                "maxLength": 64,
-                "minLength": 1,
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Stock Code"
-          },
-          "subjects": {
-            "anyOf": [
-              {
-                "items": {
-                  "$ref": "#/components/schemas/ResearchSubjectInput"
-                },
-                "maxItems": 6,
-                "minItems": 1,
-                "type": "array"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Subjects"
-          }
-        },
-        "title": "ResearchQuery",
-        "type": "object"
-      },
-      "ResearchRequest": {
-        "additionalProperties": false,
-        "properties": {
-          "cursor": {
-            "anyOf": [
-              {
-                "maxLength": 8192,
-                "minLength": 8,
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Cursor"
-          },
-          "depth": {
-            "default": "standard",
-            "enum": [
-              "summary",
-              "standard",
-              "deep"
-            ],
-            "title": "Depth",
-            "type": "string"
-          },
-          "limit": {
-            "anyOf": [
-              {
-                "maximum": 25.0,
-                "minimum": 1.0,
-                "type": "integer"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Limit"
-          },
-          "mode": {
-            "enum": [
-              "company",
-              "product",
-              "industry",
-              "compare",
-              "changes"
-            ],
-            "title": "Mode",
-            "type": "string"
-          },
-          "query": {
-            "$ref": "#/components/schemas/ResearchQuery"
-          },
-          "response": {
-            "default": "json",
-            "enum": [
-              "json",
-              "markdown"
-            ],
-            "title": "Response",
-            "type": "string"
-          },
-          "select": {
-            "items": {
-              "enum": [
-                "overview",
-                "products",
-                "positions",
-                "companies",
-                "relationships",
-                "claims",
-                "milestones",
-                "sources",
-                "unknowns",
-                "conflicts",
-                "coverage",
-                "changes"
-              ],
-              "type": "string"
-            },
-            "maxItems": 12,
-            "minItems": 1,
-            "title": "Select",
-            "type": "array"
-          }
-        },
-        "required": [
-          "mode",
-          "query"
-        ],
-        "title": "ResearchRequest",
-        "type": "object"
-      },
-      "ResearchSubjectInput": {
-        "additionalProperties": false,
-        "properties": {
-          "company_id": {
-            "anyOf": [
-              {
-                "maxLength": 128,
-                "minLength": 1,
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Company Id"
-          },
-          "market": {
-            "anyOf": [
-              {
-                "maxLength": 32,
-                "minLength": 1,
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Market"
-          },
-          "name": {
-            "anyOf": [
-              {
-                "maxLength": 128,
-                "minLength": 2,
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Name"
-          },
-          "network_id": {
-            "default": "net_aiinfra_23chain_global",
-            "maxLength": 128,
-            "minLength": 1,
-            "title": "Network Id",
-            "type": "string"
-          },
-          "product_id": {
-            "anyOf": [
-              {
-                "maxLength": 128,
-                "minLength": 1,
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Product Id"
-          },
-          "stock_code": {
-            "anyOf": [
-              {
-                "maxLength": 64,
-                "minLength": 1,
-                "type": "string"
-              },
-              {
-                "type": "null"
-              }
-            ],
-            "title": "Stock Code"
-          },
-          "type": {
-            "enum": [
-              "company",
-              "product"
-            ],
-            "title": "Type",
-            "type": "string"
-          }
-        },
-        "required": [
-          "type"
-        ],
-        "title": "ResearchSubjectInput",
-        "type": "object"
-      },
-      "ResearchUsage": {
-        "additionalProperties": false,
-        "properties": {
-          "charged_ru": {
-            "minimum": 0.0,
-            "title": "Charged Ru",
-            "type": "integer"
-          },
-          "monthly_included_remaining_ru": {
-            "minimum": 0.0,
-            "title": "Monthly Included Remaining Ru",
-            "type": "integer"
-          },
-          "replayed": {
-            "default": false,
-            "title": "Replayed",
-            "type": "boolean"
-          },
-          "topup_remaining_ru": {
-            "default": 0,
-            "minimum": 0.0,
-            "title": "Topup Remaining Ru",
-            "type": "integer"
-          }
-        },
-        "required": [
-          "charged_ru",
-          "monthly_included_remaining_ru"
-        ],
-        "title": "ResearchUsage",
-        "type": "object"
-      }
-    },
-    "securitySchemes": {
-      "ResearchApiKey": {
-        "in": "header",
-        "name": "X-API-Key",
-        "type": "apiKey"
-      }
-    }
-  },
-  "info": {
-    "title": "SIJI Research API",
-    "version": "1.0"
-  },
   "openapi": "3.1.0",
+  "info": {
+    "title": "SIJI Agent Graph API",
+    "version": "siji.agent/v1",
+    "description": "Public typed research primitives over SIJI's maintained AI-industry world model."
+  },
   "paths": {
-    "/v1/research": {
-      "post": {
-        "description": "Company, product, industry, comparison and continuous tracking use one account quota.\n\nAPI keys authenticate; quota belongs to the account. A browser may instead\nuse SIJI's existing session + CSRF protection. ResearchRoute admits and\nrate-limits the account before body parsing. Idempotency-Key is optional:\nsame key retries are replayable for 24h, headerless identical requests for\n10min. Research does not initiate a crawl or a new research agent.",
-        "operationId": "research_v1_research_post",
-        "parameters": [
-          {
-            "description": "Keep unchanged for retries of one logical request (24h).",
-            "in": "header",
-            "name": "Idempotency-Key",
-            "required": false,
-            "schema": {
-              "anyOf": [
-                {
-                  "type": "string"
-                },
-                {
-                  "type": "null"
-                }
-              ],
-              "description": "Keep unchanged for retries of one logical request (24h).",
-              "title": "Idempotency-Key"
-            }
-          }
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ResearchRequest"
-              }
-            }
-          },
-          "required": true
-        },
+    "/v1/agent/capabilities": {
+      "get": {
+        "operationId": "siji_get_capabilities",
+        "summary": "Get the public SIJI Agent Graph capability catalog",
         "responses": {
           "200": {
+            "description": "Public capability catalog",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/ResearchPacket"
-                }
-              },
-              "text/markdown": {
-                "schema": {
-                  "type": "string"
+                  "type": "object"
                 }
               }
-            },
-            "description": "A bounded JSON or Markdown packet from currently published canonical intelligence."
-          },
-          "401": {
-            "description": "A customer API key or authenticated same-origin browser session is required."
-          },
-          "402": {
-            "description": "Account Research Units are insufficient."
-          },
-          "403": {
-            "description": "Current plan, key status or scope forbids the operation."
-          },
-          "409": {
-            "description": "Idempotency conflict, changed source rights or stale cursor."
-          },
-          "413": {
-            "description": "Request body exceeds 16 KiB."
-          },
-          "422": {
-            "description": "Invalid mode, field selection, identifier or tracking window."
-          },
-          "429": {
-            "description": "Account RPM, concurrency, rolling daily usage or enumeration limit."
-          },
-          "503": {
-            "description": "Dependency, canonical availability or bounded-work failure. No RU charged."
+            }
           }
-        },
+        }
+      }
+    },
+    "/v1/agent/world/overview": {
+      "post": {
+        "operationId": "siji_get_world_overview",
+        "summary": "Orient yourself in the whole published industry network before choosing keywords. Returns visible lightweight company/product/business/position identities and the typed relationship skeleton connecting them, plus category summaries. Fact text, evidence/source bodies and commercial values require drill-down; there is no rotating sample or overview pagination.",
         "security": [
           {
-            "ResearchApiKey": []
+            "ApiKeyAuth": []
           }
         ],
-        "summary": "Research",
-        "tags": [
-          "research"
-        ]
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$defs": {
+                  "WorldOverviewBudget": {
+                    "additionalProperties": false,
+                    "description": "Fixed larger envelope for the one-shot lightweight world graph only.",
+                    "properties": {
+                      "max_scanned_edges": {
+                        "default": 12000,
+                        "maximum": 100000,
+                        "minimum": 1,
+                        "title": "Max Scanned Edges",
+                        "type": "integer"
+                      },
+                      "max_expanded_states": {
+                        "default": 4000,
+                        "maximum": 20000,
+                        "minimum": 1,
+                        "title": "Max Expanded States",
+                        "type": "integer"
+                      },
+                      "deadline_ms": {
+                        "default": 8000,
+                        "maximum": 20000,
+                        "minimum": 10,
+                        "title": "Deadline Ms",
+                        "type": "integer"
+                      },
+                      "max_response_bytes": {
+                        "const": 1048576,
+                        "default": 1048576,
+                        "title": "Max Response Bytes",
+                        "type": "integer"
+                      }
+                    },
+                    "title": "WorldOverviewBudget",
+                    "type": "object"
+                  }
+                },
+                "additionalProperties": false,
+                "description": "One fixed lightweight graph of a published industry network.\n\nNo entity filters, time slicing, alternate projections, random seeds or\npagination. It may expose visible node identity plus typed relationship\nskeletons, but not deep fact/evidence/source payloads. Repeating this\noperation cannot reveal a rotating sample.",
+                "properties": {
+                  "operation": {
+                    "const": "get_world_overview",
+                    "default": "get_world_overview",
+                    "title": "Operation",
+                    "type": "string"
+                  },
+                  "network_ids": {
+                    "default": [
+                      "net_aiinfra_23chain_global"
+                    ],
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 1,
+                    "minItems": 1,
+                    "title": "Network Ids",
+                    "type": "array"
+                  },
+                  "session_id": {
+                    "anyOf": [
+                      {
+                        "format": "uuid",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Session Id"
+                  },
+                  "cursor": {
+                    "default": null,
+                    "title": "Cursor",
+                    "type": "null"
+                  },
+                  "projection": {
+                    "default": [
+                      "graph_min"
+                    ],
+                    "items": {
+                      "const": "graph_min",
+                      "type": "string"
+                    },
+                    "maxItems": 1,
+                    "minItems": 1,
+                    "title": "Projection",
+                    "type": "array"
+                  },
+                  "limit": {
+                    "const": 50,
+                    "default": 50,
+                    "title": "Limit",
+                    "type": "integer"
+                  },
+                  "budget": {
+                    "$ref": "#/$defs/WorldOverviewBudget"
+                  }
+                },
+                "title": "WorldOverviewQuery",
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "SIJI Agent Graph response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "schema_version": {
+                      "const": "siji.agent/v1",
+                      "default": "siji.agent/v1",
+                      "title": "Schema Version",
+                      "type": "string"
+                    },
+                    "operation": {
+                      "enum": [
+                        "search_entities",
+                        "get_entities",
+                        "list_changes",
+                        "expand_graph",
+                        "trace_paths",
+                        "get_facts",
+                        "get_evidence",
+                        "compare",
+                        "get_world_overview"
+                      ],
+                      "title": "Operation",
+                      "type": "string"
+                    },
+                    "request_id": {
+                      "title": "Request Id",
+                      "type": "string"
+                    },
+                    "delivery_id": {
+                      "format": "uuid",
+                      "title": "Delivery Id",
+                      "type": "string"
+                    },
+                    "session_id": {
+                      "format": "uuid",
+                      "title": "Session Id",
+                      "type": "string"
+                    },
+                    "snapshot_id": {
+                      "title": "Snapshot Id",
+                      "type": "string"
+                    },
+                    "data_as_of": {
+                      "title": "Data As Of",
+                      "type": "string"
+                    },
+                    "generated_at": {
+                      "format": "date-time",
+                      "title": "Generated At",
+                      "type": "string"
+                    },
+                    "status": {
+                      "enum": [
+                        "complete",
+                        "partial",
+                        "unsupported"
+                      ],
+                      "title": "Status",
+                      "type": "string"
+                    },
+                    "termination_reason": {
+                      "title": "Termination Reason",
+                      "type": "string"
+                    },
+                    "data": {
+                      "additionalProperties": true,
+                      "title": "Data",
+                      "type": "object"
+                    },
+                    "coverage": {
+                      "additionalProperties": true,
+                      "title": "Coverage",
+                      "type": "object"
+                    },
+                    "frontier": {
+                      "items": {
+                        "additionalProperties": true,
+                        "type": "object"
+                      },
+                      "title": "Frontier",
+                      "type": "array"
+                    },
+                    "pagination": {
+                      "additionalProperties": true,
+                      "title": "Pagination",
+                      "type": "object"
+                    },
+                    "usage": {
+                      "additionalProperties": true,
+                      "title": "Usage",
+                      "type": "object"
+                    },
+                    "response_hash": {
+                      "title": "Response Hash",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "operation",
+                    "request_id",
+                    "delivery_id",
+                    "session_id",
+                    "snapshot_id",
+                    "data_as_of",
+                    "generated_at",
+                    "status",
+                    "termination_reason",
+                    "data",
+                    "coverage",
+                    "pagination",
+                    "usage",
+                    "response_hash"
+                  ],
+                  "title": "AgentEnvelope",
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/agent/entities/search": {
+      "post": {
+        "operationId": "siji_search_entities",
+        "summary": "Resolve names, aliases, tickers or scoped product terms to canonical typed IDs. For unknown research space, get_world_overview gives orientation and list_changes gives recent changes. No wildcard or whole-database listing.",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$defs": {
+                  "EntityRef": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "type": {
+                        "enum": [
+                          "company",
+                          "product",
+                          "business",
+                          "position"
+                        ],
+                        "title": "Type",
+                        "type": "string"
+                      },
+                      "id": {
+                        "maxLength": 192,
+                        "minLength": 1,
+                        "title": "Id",
+                        "type": "string"
+                      },
+                      "chain_version_id": {
+                        "anyOf": [
+                          {
+                            "format": "uuid",
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "default": null,
+                        "title": "Chain Version Id"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "id"
+                    ],
+                    "title": "EntityRef",
+                    "type": "object"
+                  },
+                  "WorkBudget": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "max_scanned_edges": {
+                        "default": 12000,
+                        "maximum": 100000,
+                        "minimum": 1,
+                        "title": "Max Scanned Edges",
+                        "type": "integer"
+                      },
+                      "max_expanded_states": {
+                        "default": 4000,
+                        "maximum": 20000,
+                        "minimum": 1,
+                        "title": "Max Expanded States",
+                        "type": "integer"
+                      },
+                      "deadline_ms": {
+                        "default": 8000,
+                        "maximum": 20000,
+                        "minimum": 10,
+                        "title": "Deadline Ms",
+                        "type": "integer"
+                      },
+                      "max_response_bytes": {
+                        "default": 262144,
+                        "maximum": 524288,
+                        "minimum": 8192,
+                        "title": "Max Response Bytes",
+                        "type": "integer"
+                      }
+                    },
+                    "title": "WorkBudget",
+                    "type": "object"
+                  }
+                },
+                "additionalProperties": false,
+                "properties": {
+                  "operation": {
+                    "const": "search_entities",
+                    "default": "search_entities",
+                    "title": "Operation",
+                    "type": "string"
+                  },
+                  "network_ids": {
+                    "default": [
+                      "net_aiinfra_23chain_global"
+                    ],
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 16,
+                    "minItems": 1,
+                    "title": "Network Ids",
+                    "type": "array"
+                  },
+                  "session_id": {
+                    "anyOf": [
+                      {
+                        "format": "uuid",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Session Id"
+                  },
+                  "cursor": {
+                    "anyOf": [
+                      {
+                        "maxLength": 8192,
+                        "minLength": 16,
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Cursor"
+                  },
+                  "projection": {
+                    "default": [
+                      "graph_min"
+                    ],
+                    "items": {
+                      "enum": [
+                        "identity",
+                        "graph_min",
+                        "research",
+                        "facts",
+                        "evidence_refs",
+                        "timeline"
+                      ],
+                      "type": "string"
+                    },
+                    "maxItems": 6,
+                    "minItems": 1,
+                    "title": "Projection",
+                    "type": "array"
+                  },
+                  "limit": {
+                    "default": 50,
+                    "maximum": 500,
+                    "minimum": 1,
+                    "title": "Limit",
+                    "type": "integer"
+                  },
+                  "budget": {
+                    "$ref": "#/$defs/WorkBudget"
+                  },
+                  "query": {
+                    "anyOf": [
+                      {
+                        "maxLength": 200,
+                        "minLength": 1,
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Query"
+                  },
+                  "entity_types": {
+                    "default": [
+                      "company",
+                      "product",
+                      "business",
+                      "position"
+                    ],
+                    "items": {
+                      "enum": [
+                        "company",
+                        "product",
+                        "business",
+                        "position"
+                      ],
+                      "type": "string"
+                    },
+                    "title": "Entity Types",
+                    "type": "array"
+                  },
+                  "position_refs": {
+                    "items": {
+                      "$ref": "#/$defs/EntityRef"
+                    },
+                    "maxItems": 32,
+                    "title": "Position Refs",
+                    "type": "array"
+                  },
+                  "markets": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 16,
+                    "title": "Markets",
+                    "type": "array"
+                  }
+                },
+                "title": "SearchEntitiesQuery",
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "SIJI Agent Graph response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "schema_version": {
+                      "const": "siji.agent/v1",
+                      "default": "siji.agent/v1",
+                      "title": "Schema Version",
+                      "type": "string"
+                    },
+                    "operation": {
+                      "enum": [
+                        "search_entities",
+                        "get_entities",
+                        "list_changes",
+                        "expand_graph",
+                        "trace_paths",
+                        "get_facts",
+                        "get_evidence",
+                        "compare",
+                        "get_world_overview"
+                      ],
+                      "title": "Operation",
+                      "type": "string"
+                    },
+                    "request_id": {
+                      "title": "Request Id",
+                      "type": "string"
+                    },
+                    "delivery_id": {
+                      "format": "uuid",
+                      "title": "Delivery Id",
+                      "type": "string"
+                    },
+                    "session_id": {
+                      "format": "uuid",
+                      "title": "Session Id",
+                      "type": "string"
+                    },
+                    "snapshot_id": {
+                      "title": "Snapshot Id",
+                      "type": "string"
+                    },
+                    "data_as_of": {
+                      "title": "Data As Of",
+                      "type": "string"
+                    },
+                    "generated_at": {
+                      "format": "date-time",
+                      "title": "Generated At",
+                      "type": "string"
+                    },
+                    "status": {
+                      "enum": [
+                        "complete",
+                        "partial",
+                        "unsupported"
+                      ],
+                      "title": "Status",
+                      "type": "string"
+                    },
+                    "termination_reason": {
+                      "title": "Termination Reason",
+                      "type": "string"
+                    },
+                    "data": {
+                      "additionalProperties": true,
+                      "title": "Data",
+                      "type": "object"
+                    },
+                    "coverage": {
+                      "additionalProperties": true,
+                      "title": "Coverage",
+                      "type": "object"
+                    },
+                    "frontier": {
+                      "items": {
+                        "additionalProperties": true,
+                        "type": "object"
+                      },
+                      "title": "Frontier",
+                      "type": "array"
+                    },
+                    "pagination": {
+                      "additionalProperties": true,
+                      "title": "Pagination",
+                      "type": "object"
+                    },
+                    "usage": {
+                      "additionalProperties": true,
+                      "title": "Usage",
+                      "type": "object"
+                    },
+                    "response_hash": {
+                      "title": "Response Hash",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "operation",
+                    "request_id",
+                    "delivery_id",
+                    "session_id",
+                    "snapshot_id",
+                    "data_as_of",
+                    "generated_at",
+                    "status",
+                    "termination_reason",
+                    "data",
+                    "coverage",
+                    "pagination",
+                    "usage",
+                    "response_hash"
+                  ],
+                  "title": "AgentEnvelope",
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/agent/entities/get": {
+      "post": {
+        "operationId": "siji_get_entities",
+        "summary": "Reopen explicit typed entity references, including existing position UUIDs and chain versions. Identity is not evidence of participation, orders or commercial stage.",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$defs": {
+                  "EntityRef": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "type": {
+                        "enum": [
+                          "company",
+                          "product",
+                          "business",
+                          "position"
+                        ],
+                        "title": "Type",
+                        "type": "string"
+                      },
+                      "id": {
+                        "maxLength": 192,
+                        "minLength": 1,
+                        "title": "Id",
+                        "type": "string"
+                      },
+                      "chain_version_id": {
+                        "anyOf": [
+                          {
+                            "format": "uuid",
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "default": null,
+                        "title": "Chain Version Id"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "id"
+                    ],
+                    "title": "EntityRef",
+                    "type": "object"
+                  },
+                  "WorkBudget": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "max_scanned_edges": {
+                        "default": 12000,
+                        "maximum": 100000,
+                        "minimum": 1,
+                        "title": "Max Scanned Edges",
+                        "type": "integer"
+                      },
+                      "max_expanded_states": {
+                        "default": 4000,
+                        "maximum": 20000,
+                        "minimum": 1,
+                        "title": "Max Expanded States",
+                        "type": "integer"
+                      },
+                      "deadline_ms": {
+                        "default": 8000,
+                        "maximum": 20000,
+                        "minimum": 10,
+                        "title": "Deadline Ms",
+                        "type": "integer"
+                      },
+                      "max_response_bytes": {
+                        "default": 262144,
+                        "maximum": 524288,
+                        "minimum": 8192,
+                        "title": "Max Response Bytes",
+                        "type": "integer"
+                      }
+                    },
+                    "title": "WorkBudget",
+                    "type": "object"
+                  }
+                },
+                "additionalProperties": false,
+                "properties": {
+                  "operation": {
+                    "const": "get_entities",
+                    "default": "get_entities",
+                    "title": "Operation",
+                    "type": "string"
+                  },
+                  "network_ids": {
+                    "default": [
+                      "net_aiinfra_23chain_global"
+                    ],
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 16,
+                    "minItems": 1,
+                    "title": "Network Ids",
+                    "type": "array"
+                  },
+                  "session_id": {
+                    "anyOf": [
+                      {
+                        "format": "uuid",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Session Id"
+                  },
+                  "cursor": {
+                    "anyOf": [
+                      {
+                        "maxLength": 8192,
+                        "minLength": 16,
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Cursor"
+                  },
+                  "projection": {
+                    "default": [
+                      "identity"
+                    ],
+                    "items": {
+                      "enum": [
+                        "identity",
+                        "graph_min",
+                        "research",
+                        "facts",
+                        "evidence_refs",
+                        "timeline"
+                      ],
+                      "type": "string"
+                    },
+                    "title": "Projection",
+                    "type": "array"
+                  },
+                  "limit": {
+                    "default": 50,
+                    "maximum": 500,
+                    "minimum": 1,
+                    "title": "Limit",
+                    "type": "integer"
+                  },
+                  "budget": {
+                    "$ref": "#/$defs/WorkBudget"
+                  },
+                  "entity_refs": {
+                    "items": {
+                      "$ref": "#/$defs/EntityRef"
+                    },
+                    "maxItems": 128,
+                    "minItems": 1,
+                    "title": "Entity Refs",
+                    "type": "array"
+                  }
+                },
+                "required": [
+                  "entity_refs"
+                ],
+                "title": "GetEntitiesQuery",
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "SIJI Agent Graph response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "schema_version": {
+                      "const": "siji.agent/v1",
+                      "default": "siji.agent/v1",
+                      "title": "Schema Version",
+                      "type": "string"
+                    },
+                    "operation": {
+                      "enum": [
+                        "search_entities",
+                        "get_entities",
+                        "list_changes",
+                        "expand_graph",
+                        "trace_paths",
+                        "get_facts",
+                        "get_evidence",
+                        "compare",
+                        "get_world_overview"
+                      ],
+                      "title": "Operation",
+                      "type": "string"
+                    },
+                    "request_id": {
+                      "title": "Request Id",
+                      "type": "string"
+                    },
+                    "delivery_id": {
+                      "format": "uuid",
+                      "title": "Delivery Id",
+                      "type": "string"
+                    },
+                    "session_id": {
+                      "format": "uuid",
+                      "title": "Session Id",
+                      "type": "string"
+                    },
+                    "snapshot_id": {
+                      "title": "Snapshot Id",
+                      "type": "string"
+                    },
+                    "data_as_of": {
+                      "title": "Data As Of",
+                      "type": "string"
+                    },
+                    "generated_at": {
+                      "format": "date-time",
+                      "title": "Generated At",
+                      "type": "string"
+                    },
+                    "status": {
+                      "enum": [
+                        "complete",
+                        "partial",
+                        "unsupported"
+                      ],
+                      "title": "Status",
+                      "type": "string"
+                    },
+                    "termination_reason": {
+                      "title": "Termination Reason",
+                      "type": "string"
+                    },
+                    "data": {
+                      "additionalProperties": true,
+                      "title": "Data",
+                      "type": "object"
+                    },
+                    "coverage": {
+                      "additionalProperties": true,
+                      "title": "Coverage",
+                      "type": "object"
+                    },
+                    "frontier": {
+                      "items": {
+                        "additionalProperties": true,
+                        "type": "object"
+                      },
+                      "title": "Frontier",
+                      "type": "array"
+                    },
+                    "pagination": {
+                      "additionalProperties": true,
+                      "title": "Pagination",
+                      "type": "object"
+                    },
+                    "usage": {
+                      "additionalProperties": true,
+                      "title": "Usage",
+                      "type": "object"
+                    },
+                    "response_hash": {
+                      "title": "Response Hash",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "operation",
+                    "request_id",
+                    "delivery_id",
+                    "session_id",
+                    "snapshot_id",
+                    "data_as_of",
+                    "generated_at",
+                    "status",
+                    "termination_reason",
+                    "data",
+                    "coverage",
+                    "pagination",
+                    "usage",
+                    "response_hash"
+                  ],
+                  "title": "AgentEnvelope",
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/agent/changes/list": {
+      "post": {
+        "operationId": "siji_list_changes",
+        "summary": "Discover recent canonical changes without naming candidates, or track an explicit set with a checkpoint. SIJI publication time, business event time and valid time are distinct. Missing history is explicit.",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$defs": {
+                  "EntityRef": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "type": {
+                        "enum": [
+                          "company",
+                          "product",
+                          "business",
+                          "position"
+                        ],
+                        "title": "Type",
+                        "type": "string"
+                      },
+                      "id": {
+                        "maxLength": 192,
+                        "minLength": 1,
+                        "title": "Id",
+                        "type": "string"
+                      },
+                      "chain_version_id": {
+                        "anyOf": [
+                          {
+                            "format": "uuid",
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "default": null,
+                        "title": "Chain Version Id"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "id"
+                    ],
+                    "title": "EntityRef",
+                    "type": "object"
+                  },
+                  "WorkBudget": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "max_scanned_edges": {
+                        "default": 12000,
+                        "maximum": 100000,
+                        "minimum": 1,
+                        "title": "Max Scanned Edges",
+                        "type": "integer"
+                      },
+                      "max_expanded_states": {
+                        "default": 4000,
+                        "maximum": 20000,
+                        "minimum": 1,
+                        "title": "Max Expanded States",
+                        "type": "integer"
+                      },
+                      "deadline_ms": {
+                        "default": 8000,
+                        "maximum": 20000,
+                        "minimum": 10,
+                        "title": "Deadline Ms",
+                        "type": "integer"
+                      },
+                      "max_response_bytes": {
+                        "default": 262144,
+                        "maximum": 524288,
+                        "minimum": 8192,
+                        "title": "Max Response Bytes",
+                        "type": "integer"
+                      }
+                    },
+                    "title": "WorkBudget",
+                    "type": "object"
+                  }
+                },
+                "additionalProperties": false,
+                "properties": {
+                  "operation": {
+                    "const": "list_changes",
+                    "default": "list_changes",
+                    "title": "Operation",
+                    "type": "string"
+                  },
+                  "network_ids": {
+                    "default": [
+                      "net_aiinfra_23chain_global"
+                    ],
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 16,
+                    "minItems": 1,
+                    "title": "Network Ids",
+                    "type": "array"
+                  },
+                  "session_id": {
+                    "anyOf": [
+                      {
+                        "format": "uuid",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Session Id"
+                  },
+                  "cursor": {
+                    "anyOf": [
+                      {
+                        "maxLength": 8192,
+                        "minLength": 16,
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Cursor"
+                  },
+                  "projection": {
+                    "default": [
+                      "research",
+                      "evidence_refs"
+                    ],
+                    "items": {
+                      "enum": [
+                        "identity",
+                        "graph_min",
+                        "research",
+                        "facts",
+                        "evidence_refs",
+                        "timeline"
+                      ],
+                      "type": "string"
+                    },
+                    "title": "Projection",
+                    "type": "array"
+                  },
+                  "limit": {
+                    "default": 50,
+                    "maximum": 500,
+                    "minimum": 1,
+                    "title": "Limit",
+                    "type": "integer"
+                  },
+                  "budget": {
+                    "$ref": "#/$defs/WorkBudget"
+                  },
+                  "mode": {
+                    "default": "discovery",
+                    "enum": [
+                      "discovery",
+                      "tracked"
+                    ],
+                    "title": "Mode",
+                    "type": "string"
+                  },
+                  "subject_refs": {
+                    "items": {
+                      "$ref": "#/$defs/EntityRef"
+                    },
+                    "maxItems": 128,
+                    "title": "Subject Refs",
+                    "type": "array"
+                  },
+                  "checkpoint": {
+                    "anyOf": [
+                      {
+                        "maxLength": 8192,
+                        "minLength": 16,
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Checkpoint"
+                  },
+                  "since": {
+                    "anyOf": [
+                      {
+                        "format": "date-time",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Since"
+                  },
+                  "until": {
+                    "anyOf": [
+                      {
+                        "format": "date-time",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Until"
+                  },
+                  "entity_types": {
+                    "items": {
+                      "enum": [
+                        "company",
+                        "product",
+                        "business",
+                        "position"
+                      ],
+                      "type": "string"
+                    },
+                    "title": "Entity Types",
+                    "type": "array"
+                  },
+                  "event_types": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 32,
+                    "title": "Event Types",
+                    "type": "array"
+                  },
+                  "predicates": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 32,
+                    "title": "Predicates",
+                    "type": "array"
+                  },
+                  "time_field": {
+                    "default": "published_at",
+                    "enum": [
+                      "published_at",
+                      "event_time"
+                    ],
+                    "title": "Time Field",
+                    "type": "string"
+                  }
+                },
+                "title": "ListChangesQuery",
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "SIJI Agent Graph response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "schema_version": {
+                      "const": "siji.agent/v1",
+                      "default": "siji.agent/v1",
+                      "title": "Schema Version",
+                      "type": "string"
+                    },
+                    "operation": {
+                      "enum": [
+                        "search_entities",
+                        "get_entities",
+                        "list_changes",
+                        "expand_graph",
+                        "trace_paths",
+                        "get_facts",
+                        "get_evidence",
+                        "compare",
+                        "get_world_overview"
+                      ],
+                      "title": "Operation",
+                      "type": "string"
+                    },
+                    "request_id": {
+                      "title": "Request Id",
+                      "type": "string"
+                    },
+                    "delivery_id": {
+                      "format": "uuid",
+                      "title": "Delivery Id",
+                      "type": "string"
+                    },
+                    "session_id": {
+                      "format": "uuid",
+                      "title": "Session Id",
+                      "type": "string"
+                    },
+                    "snapshot_id": {
+                      "title": "Snapshot Id",
+                      "type": "string"
+                    },
+                    "data_as_of": {
+                      "title": "Data As Of",
+                      "type": "string"
+                    },
+                    "generated_at": {
+                      "format": "date-time",
+                      "title": "Generated At",
+                      "type": "string"
+                    },
+                    "status": {
+                      "enum": [
+                        "complete",
+                        "partial",
+                        "unsupported"
+                      ],
+                      "title": "Status",
+                      "type": "string"
+                    },
+                    "termination_reason": {
+                      "title": "Termination Reason",
+                      "type": "string"
+                    },
+                    "data": {
+                      "additionalProperties": true,
+                      "title": "Data",
+                      "type": "object"
+                    },
+                    "coverage": {
+                      "additionalProperties": true,
+                      "title": "Coverage",
+                      "type": "object"
+                    },
+                    "frontier": {
+                      "items": {
+                        "additionalProperties": true,
+                        "type": "object"
+                      },
+                      "title": "Frontier",
+                      "type": "array"
+                    },
+                    "pagination": {
+                      "additionalProperties": true,
+                      "title": "Pagination",
+                      "type": "object"
+                    },
+                    "usage": {
+                      "additionalProperties": true,
+                      "title": "Usage",
+                      "type": "object"
+                    },
+                    "response_hash": {
+                      "title": "Response Hash",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "operation",
+                    "request_id",
+                    "delivery_id",
+                    "session_id",
+                    "snapshot_id",
+                    "data_as_of",
+                    "generated_at",
+                    "status",
+                    "termination_reason",
+                    "data",
+                    "coverage",
+                    "pagination",
+                    "usage",
+                    "response_hash"
+                  ],
+                  "title": "AgentEnvelope",
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/agent/graph/expand": {
+      "post": {
+        "operationId": "siji_expand_graph",
+        "summary": "Explore any returned node again, in either direction and across supported chains. Traverse filters and returned-node filters are independent. Also reopens exact relationship refs or inspects edges inside an explicit node set. Structural adjacency does not prove company transactions.",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$defs": {
+                  "EntityRef": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "type": {
+                        "enum": [
+                          "company",
+                          "product",
+                          "business",
+                          "position"
+                        ],
+                        "title": "Type",
+                        "type": "string"
+                      },
+                      "id": {
+                        "maxLength": 192,
+                        "minLength": 1,
+                        "title": "Id",
+                        "type": "string"
+                      },
+                      "chain_version_id": {
+                        "anyOf": [
+                          {
+                            "format": "uuid",
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "default": null,
+                        "title": "Chain Version Id"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "id"
+                    ],
+                    "title": "EntityRef",
+                    "type": "object"
+                  },
+                  "NodeFilter": {
+                    "additionalProperties": false,
+                    "description": "Explicit filters; result filters and traversal filters are separate.",
+                    "properties": {
+                      "ids": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "maxItems": 128,
+                        "title": "Ids",
+                        "type": "array"
+                      },
+                      "excluded_ids": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "maxItems": 128,
+                        "title": "Excluded Ids",
+                        "type": "array"
+                      }
+                    },
+                    "title": "NodeFilter",
+                    "type": "object"
+                  },
+                  "RelationshipRef": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "type": {
+                        "enum": [
+                          "participation",
+                          "placement",
+                          "company_relationship",
+                          "structure",
+                          "cross_chain"
+                        ],
+                        "title": "Type",
+                        "type": "string"
+                      },
+                      "facet": {
+                        "default": "subject",
+                        "enum": [
+                          "subject",
+                          "position"
+                        ],
+                        "title": "Facet",
+                        "type": "string"
+                      },
+                      "id": {
+                        "maxLength": 192,
+                        "minLength": 1,
+                        "title": "Id",
+                        "type": "string"
+                      },
+                      "chain_version_id": {
+                        "anyOf": [
+                          {
+                            "format": "uuid",
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "default": null,
+                        "title": "Chain Version Id"
+                      },
+                      "source_position_id": {
+                        "anyOf": [
+                          {
+                            "format": "uuid",
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "default": null,
+                        "title": "Source Position Id"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "id"
+                    ],
+                    "title": "RelationshipRef",
+                    "type": "object"
+                  },
+                  "WorkBudget": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "max_scanned_edges": {
+                        "default": 12000,
+                        "maximum": 100000,
+                        "minimum": 1,
+                        "title": "Max Scanned Edges",
+                        "type": "integer"
+                      },
+                      "max_expanded_states": {
+                        "default": 4000,
+                        "maximum": 20000,
+                        "minimum": 1,
+                        "title": "Max Expanded States",
+                        "type": "integer"
+                      },
+                      "deadline_ms": {
+                        "default": 8000,
+                        "maximum": 20000,
+                        "minimum": 10,
+                        "title": "Deadline Ms",
+                        "type": "integer"
+                      },
+                      "max_response_bytes": {
+                        "default": 262144,
+                        "maximum": 524288,
+                        "minimum": 8192,
+                        "title": "Max Response Bytes",
+                        "type": "integer"
+                      }
+                    },
+                    "title": "WorkBudget",
+                    "type": "object"
+                  }
+                },
+                "additionalProperties": false,
+                "properties": {
+                  "operation": {
+                    "const": "expand_graph",
+                    "default": "expand_graph",
+                    "title": "Operation",
+                    "type": "string"
+                  },
+                  "network_ids": {
+                    "default": [
+                      "net_aiinfra_23chain_global"
+                    ],
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 16,
+                    "minItems": 1,
+                    "title": "Network Ids",
+                    "type": "array"
+                  },
+                  "session_id": {
+                    "anyOf": [
+                      {
+                        "format": "uuid",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Session Id"
+                  },
+                  "cursor": {
+                    "anyOf": [
+                      {
+                        "maxLength": 8192,
+                        "minLength": 16,
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Cursor"
+                  },
+                  "projection": {
+                    "default": [
+                      "graph_min"
+                    ],
+                    "items": {
+                      "enum": [
+                        "identity",
+                        "graph_min",
+                        "research",
+                        "facts",
+                        "evidence_refs",
+                        "timeline"
+                      ],
+                      "type": "string"
+                    },
+                    "maxItems": 6,
+                    "minItems": 1,
+                    "title": "Projection",
+                    "type": "array"
+                  },
+                  "limit": {
+                    "default": 50,
+                    "maximum": 500,
+                    "minimum": 1,
+                    "title": "Limit",
+                    "type": "integer"
+                  },
+                  "budget": {
+                    "$ref": "#/$defs/WorkBudget"
+                  },
+                  "edge_direction": {
+                    "default": "both",
+                    "enum": [
+                      "incoming",
+                      "outgoing",
+                      "both"
+                    ],
+                    "title": "Edge Direction",
+                    "type": "string"
+                  },
+                  "industry_direction": {
+                    "default": "none",
+                    "enum": [
+                      "none",
+                      "upstream",
+                      "downstream",
+                      "both"
+                    ],
+                    "title": "Industry Direction",
+                    "type": "string"
+                  },
+                  "relation_types": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 64,
+                    "title": "Relation Types",
+                    "type": "array"
+                  },
+                  "relation_kinds": {
+                    "items": {
+                      "enum": [
+                        "participation",
+                        "placement",
+                        "company_relationship",
+                        "structure",
+                        "cross_chain"
+                      ],
+                      "type": "string"
+                    },
+                    "title": "Relation Kinds",
+                    "type": "array"
+                  },
+                  "traverse_types": {
+                    "default": [
+                      "company",
+                      "product",
+                      "business",
+                      "position"
+                    ],
+                    "items": {
+                      "enum": [
+                        "company",
+                        "product",
+                        "business",
+                        "position"
+                      ],
+                      "type": "string"
+                    },
+                    "title": "Traverse Types",
+                    "type": "array"
+                  },
+                  "return_types": {
+                    "default": [
+                      "company",
+                      "product",
+                      "business",
+                      "position"
+                    ],
+                    "items": {
+                      "enum": [
+                        "company",
+                        "product",
+                        "business",
+                        "position"
+                      ],
+                      "type": "string"
+                    },
+                    "title": "Return Types",
+                    "type": "array"
+                  },
+                  "traverse_filters": {
+                    "$ref": "#/$defs/NodeFilter"
+                  },
+                  "return_filters": {
+                    "$ref": "#/$defs/NodeFilter"
+                  },
+                  "avoid_node_ids": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "title": "Avoid Node Ids",
+                    "type": "array"
+                  },
+                  "avoid_relationship_ids": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "title": "Avoid Relationship Ids",
+                    "type": "array"
+                  },
+                  "max_hops": {
+                    "default": 2,
+                    "maximum": 32,
+                    "minimum": 1,
+                    "title": "Max Hops",
+                    "type": "integer"
+                  },
+                  "per_node_limit": {
+                    "default": 100,
+                    "maximum": 500,
+                    "minimum": 1,
+                    "title": "Per Node Limit",
+                    "type": "integer"
+                  },
+                  "valid_at": {
+                    "anyOf": [
+                      {
+                        "format": "date-time",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Valid At"
+                  },
+                  "seeds": {
+                    "items": {
+                      "$ref": "#/$defs/EntityRef"
+                    },
+                    "maxItems": 128,
+                    "title": "Seeds",
+                    "type": "array"
+                  },
+                  "relationship_refs": {
+                    "items": {
+                      "$ref": "#/$defs/RelationshipRef"
+                    },
+                    "maxItems": 128,
+                    "title": "Relationship Refs",
+                    "type": "array"
+                  },
+                  "return_internal_edges": {
+                    "default": false,
+                    "title": "Return Internal Edges",
+                    "type": "boolean"
+                  },
+                  "expand_new_frontier": {
+                    "default": true,
+                    "title": "Expand New Frontier",
+                    "type": "boolean"
+                  }
+                },
+                "title": "ExpandGraphQuery",
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "SIJI Agent Graph response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "schema_version": {
+                      "const": "siji.agent/v1",
+                      "default": "siji.agent/v1",
+                      "title": "Schema Version",
+                      "type": "string"
+                    },
+                    "operation": {
+                      "enum": [
+                        "search_entities",
+                        "get_entities",
+                        "list_changes",
+                        "expand_graph",
+                        "trace_paths",
+                        "get_facts",
+                        "get_evidence",
+                        "compare",
+                        "get_world_overview"
+                      ],
+                      "title": "Operation",
+                      "type": "string"
+                    },
+                    "request_id": {
+                      "title": "Request Id",
+                      "type": "string"
+                    },
+                    "delivery_id": {
+                      "format": "uuid",
+                      "title": "Delivery Id",
+                      "type": "string"
+                    },
+                    "session_id": {
+                      "format": "uuid",
+                      "title": "Session Id",
+                      "type": "string"
+                    },
+                    "snapshot_id": {
+                      "title": "Snapshot Id",
+                      "type": "string"
+                    },
+                    "data_as_of": {
+                      "title": "Data As Of",
+                      "type": "string"
+                    },
+                    "generated_at": {
+                      "format": "date-time",
+                      "title": "Generated At",
+                      "type": "string"
+                    },
+                    "status": {
+                      "enum": [
+                        "complete",
+                        "partial",
+                        "unsupported"
+                      ],
+                      "title": "Status",
+                      "type": "string"
+                    },
+                    "termination_reason": {
+                      "title": "Termination Reason",
+                      "type": "string"
+                    },
+                    "data": {
+                      "additionalProperties": true,
+                      "title": "Data",
+                      "type": "object"
+                    },
+                    "coverage": {
+                      "additionalProperties": true,
+                      "title": "Coverage",
+                      "type": "object"
+                    },
+                    "frontier": {
+                      "items": {
+                        "additionalProperties": true,
+                        "type": "object"
+                      },
+                      "title": "Frontier",
+                      "type": "array"
+                    },
+                    "pagination": {
+                      "additionalProperties": true,
+                      "title": "Pagination",
+                      "type": "object"
+                    },
+                    "usage": {
+                      "additionalProperties": true,
+                      "title": "Usage",
+                      "type": "object"
+                    },
+                    "response_hash": {
+                      "title": "Response Hash",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "operation",
+                    "request_id",
+                    "delivery_id",
+                    "session_id",
+                    "snapshot_id",
+                    "data_as_of",
+                    "generated_at",
+                    "status",
+                    "termination_reason",
+                    "data",
+                    "coverage",
+                    "pagination",
+                    "usage",
+                    "response_hash"
+                  ],
+                  "title": "AgentEnvelope",
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/agent/graph/paths": {
+      "post": {
+        "operationId": "siji_trace_paths",
+        "summary": "Find bounded evidence-qualified graph connections with ordered waypoints, excluded nodes/edges and diverse alternatives. The agent interprets possible propagation. Paths are not causal proof; partial does not mean no path.",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$defs": {
+                  "EntityRef": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "type": {
+                        "enum": [
+                          "company",
+                          "product",
+                          "business",
+                          "position"
+                        ],
+                        "title": "Type",
+                        "type": "string"
+                      },
+                      "id": {
+                        "maxLength": 192,
+                        "minLength": 1,
+                        "title": "Id",
+                        "type": "string"
+                      },
+                      "chain_version_id": {
+                        "anyOf": [
+                          {
+                            "format": "uuid",
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "default": null,
+                        "title": "Chain Version Id"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "id"
+                    ],
+                    "title": "EntityRef",
+                    "type": "object"
+                  },
+                  "NodeFilter": {
+                    "additionalProperties": false,
+                    "description": "Explicit filters; result filters and traversal filters are separate.",
+                    "properties": {
+                      "ids": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "maxItems": 128,
+                        "title": "Ids",
+                        "type": "array"
+                      },
+                      "excluded_ids": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "maxItems": 128,
+                        "title": "Excluded Ids",
+                        "type": "array"
+                      }
+                    },
+                    "title": "NodeFilter",
+                    "type": "object"
+                  },
+                  "WorkBudget": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "max_scanned_edges": {
+                        "default": 12000,
+                        "maximum": 100000,
+                        "minimum": 1,
+                        "title": "Max Scanned Edges",
+                        "type": "integer"
+                      },
+                      "max_expanded_states": {
+                        "default": 4000,
+                        "maximum": 20000,
+                        "minimum": 1,
+                        "title": "Max Expanded States",
+                        "type": "integer"
+                      },
+                      "deadline_ms": {
+                        "default": 8000,
+                        "maximum": 20000,
+                        "minimum": 10,
+                        "title": "Deadline Ms",
+                        "type": "integer"
+                      },
+                      "max_response_bytes": {
+                        "default": 262144,
+                        "maximum": 524288,
+                        "minimum": 8192,
+                        "title": "Max Response Bytes",
+                        "type": "integer"
+                      }
+                    },
+                    "title": "WorkBudget",
+                    "type": "object"
+                  }
+                },
+                "additionalProperties": false,
+                "properties": {
+                  "operation": {
+                    "const": "trace_paths",
+                    "default": "trace_paths",
+                    "title": "Operation",
+                    "type": "string"
+                  },
+                  "network_ids": {
+                    "default": [
+                      "net_aiinfra_23chain_global"
+                    ],
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 16,
+                    "minItems": 1,
+                    "title": "Network Ids",
+                    "type": "array"
+                  },
+                  "session_id": {
+                    "anyOf": [
+                      {
+                        "format": "uuid",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Session Id"
+                  },
+                  "cursor": {
+                    "anyOf": [
+                      {
+                        "maxLength": 8192,
+                        "minLength": 16,
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Cursor"
+                  },
+                  "projection": {
+                    "default": [
+                      "graph_min"
+                    ],
+                    "items": {
+                      "enum": [
+                        "identity",
+                        "graph_min",
+                        "research",
+                        "facts",
+                        "evidence_refs",
+                        "timeline"
+                      ],
+                      "type": "string"
+                    },
+                    "maxItems": 6,
+                    "minItems": 1,
+                    "title": "Projection",
+                    "type": "array"
+                  },
+                  "limit": {
+                    "default": 50,
+                    "maximum": 500,
+                    "minimum": 1,
+                    "title": "Limit",
+                    "type": "integer"
+                  },
+                  "budget": {
+                    "$ref": "#/$defs/WorkBudget"
+                  },
+                  "edge_direction": {
+                    "default": "both",
+                    "enum": [
+                      "incoming",
+                      "outgoing",
+                      "both"
+                    ],
+                    "title": "Edge Direction",
+                    "type": "string"
+                  },
+                  "industry_direction": {
+                    "default": "none",
+                    "enum": [
+                      "none",
+                      "upstream",
+                      "downstream",
+                      "both"
+                    ],
+                    "title": "Industry Direction",
+                    "type": "string"
+                  },
+                  "relation_types": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 64,
+                    "title": "Relation Types",
+                    "type": "array"
+                  },
+                  "relation_kinds": {
+                    "items": {
+                      "enum": [
+                        "participation",
+                        "placement",
+                        "company_relationship",
+                        "structure",
+                        "cross_chain"
+                      ],
+                      "type": "string"
+                    },
+                    "title": "Relation Kinds",
+                    "type": "array"
+                  },
+                  "traverse_types": {
+                    "default": [
+                      "company",
+                      "product",
+                      "business",
+                      "position"
+                    ],
+                    "items": {
+                      "enum": [
+                        "company",
+                        "product",
+                        "business",
+                        "position"
+                      ],
+                      "type": "string"
+                    },
+                    "title": "Traverse Types",
+                    "type": "array"
+                  },
+                  "return_types": {
+                    "default": [
+                      "company",
+                      "product",
+                      "business",
+                      "position"
+                    ],
+                    "items": {
+                      "enum": [
+                        "company",
+                        "product",
+                        "business",
+                        "position"
+                      ],
+                      "type": "string"
+                    },
+                    "title": "Return Types",
+                    "type": "array"
+                  },
+                  "traverse_filters": {
+                    "$ref": "#/$defs/NodeFilter"
+                  },
+                  "return_filters": {
+                    "$ref": "#/$defs/NodeFilter"
+                  },
+                  "avoid_node_ids": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "title": "Avoid Node Ids",
+                    "type": "array"
+                  },
+                  "avoid_relationship_ids": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "title": "Avoid Relationship Ids",
+                    "type": "array"
+                  },
+                  "max_hops": {
+                    "default": 2,
+                    "maximum": 32,
+                    "minimum": 1,
+                    "title": "Max Hops",
+                    "type": "integer"
+                  },
+                  "per_node_limit": {
+                    "default": 100,
+                    "maximum": 500,
+                    "minimum": 1,
+                    "title": "Per Node Limit",
+                    "type": "integer"
+                  },
+                  "valid_at": {
+                    "anyOf": [
+                      {
+                        "format": "date-time",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Valid At"
+                  },
+                  "from_refs": {
+                    "items": {
+                      "$ref": "#/$defs/EntityRef"
+                    },
+                    "maxItems": 32,
+                    "minItems": 1,
+                    "title": "From Refs",
+                    "type": "array"
+                  },
+                  "to_refs": {
+                    "items": {
+                      "$ref": "#/$defs/EntityRef"
+                    },
+                    "maxItems": 32,
+                    "title": "To Refs",
+                    "type": "array"
+                  },
+                  "target_types": {
+                    "items": {
+                      "enum": [
+                        "company",
+                        "product",
+                        "business",
+                        "position"
+                      ],
+                      "type": "string"
+                    },
+                    "title": "Target Types",
+                    "type": "array"
+                  },
+                  "via_ids": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 16,
+                    "title": "Via Ids",
+                    "type": "array"
+                  },
+                  "path_mode": {
+                    "default": "shortest",
+                    "enum": [
+                      "shortest",
+                      "diverse",
+                      "bounded_all"
+                    ],
+                    "title": "Path Mode",
+                    "type": "string"
+                  },
+                  "max_paths": {
+                    "default": 5,
+                    "maximum": 50,
+                    "minimum": 1,
+                    "title": "Max Paths",
+                    "type": "integer"
+                  },
+                  "diversity_max_edge_overlap": {
+                    "default": 0.8,
+                    "maximum": 1.0,
+                    "minimum": 0.0,
+                    "title": "Diversity Max Edge Overlap",
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "from_refs"
+                ],
+                "title": "TracePathsQuery",
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "SIJI Agent Graph response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "schema_version": {
+                      "const": "siji.agent/v1",
+                      "default": "siji.agent/v1",
+                      "title": "Schema Version",
+                      "type": "string"
+                    },
+                    "operation": {
+                      "enum": [
+                        "search_entities",
+                        "get_entities",
+                        "list_changes",
+                        "expand_graph",
+                        "trace_paths",
+                        "get_facts",
+                        "get_evidence",
+                        "compare",
+                        "get_world_overview"
+                      ],
+                      "title": "Operation",
+                      "type": "string"
+                    },
+                    "request_id": {
+                      "title": "Request Id",
+                      "type": "string"
+                    },
+                    "delivery_id": {
+                      "format": "uuid",
+                      "title": "Delivery Id",
+                      "type": "string"
+                    },
+                    "session_id": {
+                      "format": "uuid",
+                      "title": "Session Id",
+                      "type": "string"
+                    },
+                    "snapshot_id": {
+                      "title": "Snapshot Id",
+                      "type": "string"
+                    },
+                    "data_as_of": {
+                      "title": "Data As Of",
+                      "type": "string"
+                    },
+                    "generated_at": {
+                      "format": "date-time",
+                      "title": "Generated At",
+                      "type": "string"
+                    },
+                    "status": {
+                      "enum": [
+                        "complete",
+                        "partial",
+                        "unsupported"
+                      ],
+                      "title": "Status",
+                      "type": "string"
+                    },
+                    "termination_reason": {
+                      "title": "Termination Reason",
+                      "type": "string"
+                    },
+                    "data": {
+                      "additionalProperties": true,
+                      "title": "Data",
+                      "type": "object"
+                    },
+                    "coverage": {
+                      "additionalProperties": true,
+                      "title": "Coverage",
+                      "type": "object"
+                    },
+                    "frontier": {
+                      "items": {
+                        "additionalProperties": true,
+                        "type": "object"
+                      },
+                      "title": "Frontier",
+                      "type": "array"
+                    },
+                    "pagination": {
+                      "additionalProperties": true,
+                      "title": "Pagination",
+                      "type": "object"
+                    },
+                    "usage": {
+                      "additionalProperties": true,
+                      "title": "Usage",
+                      "type": "object"
+                    },
+                    "response_hash": {
+                      "title": "Response Hash",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "operation",
+                    "request_id",
+                    "delivery_id",
+                    "session_id",
+                    "snapshot_id",
+                    "data_as_of",
+                    "generated_at",
+                    "status",
+                    "termination_reason",
+                    "data",
+                    "coverage",
+                    "pagination",
+                    "usage",
+                    "response_hash"
+                  ],
+                  "title": "AgentEnvelope",
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/agent/facts/get": {
+      "post": {
+        "operationId": "siji_get_facts",
+        "summary": "Reopen exact fact_ids or inspect qualified facts for explicit entities. Preserve status, inference, time, scope, conflicts and citations. A seen node ID does not grant all of its facts.",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$defs": {
+                  "EntityRef": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "type": {
+                        "enum": [
+                          "company",
+                          "product",
+                          "business",
+                          "position"
+                        ],
+                        "title": "Type",
+                        "type": "string"
+                      },
+                      "id": {
+                        "maxLength": 192,
+                        "minLength": 1,
+                        "title": "Id",
+                        "type": "string"
+                      },
+                      "chain_version_id": {
+                        "anyOf": [
+                          {
+                            "format": "uuid",
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "default": null,
+                        "title": "Chain Version Id"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "id"
+                    ],
+                    "title": "EntityRef",
+                    "type": "object"
+                  },
+                  "WorkBudget": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "max_scanned_edges": {
+                        "default": 12000,
+                        "maximum": 100000,
+                        "minimum": 1,
+                        "title": "Max Scanned Edges",
+                        "type": "integer"
+                      },
+                      "max_expanded_states": {
+                        "default": 4000,
+                        "maximum": 20000,
+                        "minimum": 1,
+                        "title": "Max Expanded States",
+                        "type": "integer"
+                      },
+                      "deadline_ms": {
+                        "default": 8000,
+                        "maximum": 20000,
+                        "minimum": 10,
+                        "title": "Deadline Ms",
+                        "type": "integer"
+                      },
+                      "max_response_bytes": {
+                        "default": 262144,
+                        "maximum": 524288,
+                        "minimum": 8192,
+                        "title": "Max Response Bytes",
+                        "type": "integer"
+                      }
+                    },
+                    "title": "WorkBudget",
+                    "type": "object"
+                  }
+                },
+                "additionalProperties": false,
+                "properties": {
+                  "operation": {
+                    "const": "get_facts",
+                    "default": "get_facts",
+                    "title": "Operation",
+                    "type": "string"
+                  },
+                  "network_ids": {
+                    "default": [
+                      "net_aiinfra_23chain_global"
+                    ],
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 16,
+                    "minItems": 1,
+                    "title": "Network Ids",
+                    "type": "array"
+                  },
+                  "session_id": {
+                    "anyOf": [
+                      {
+                        "format": "uuid",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Session Id"
+                  },
+                  "cursor": {
+                    "anyOf": [
+                      {
+                        "maxLength": 8192,
+                        "minLength": 16,
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Cursor"
+                  },
+                  "projection": {
+                    "default": [
+                      "facts",
+                      "evidence_refs"
+                    ],
+                    "items": {
+                      "enum": [
+                        "identity",
+                        "graph_min",
+                        "research",
+                        "facts",
+                        "evidence_refs",
+                        "timeline"
+                      ],
+                      "type": "string"
+                    },
+                    "title": "Projection",
+                    "type": "array"
+                  },
+                  "limit": {
+                    "default": 50,
+                    "maximum": 500,
+                    "minimum": 1,
+                    "title": "Limit",
+                    "type": "integer"
+                  },
+                  "budget": {
+                    "$ref": "#/$defs/WorkBudget"
+                  },
+                  "subject_refs": {
+                    "items": {
+                      "$ref": "#/$defs/EntityRef"
+                    },
+                    "maxItems": 128,
+                    "title": "Subject Refs",
+                    "type": "array"
+                  },
+                  "fact_ids": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "title": "Fact Ids",
+                    "type": "array"
+                  },
+                  "predicates": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 32,
+                    "title": "Predicates",
+                    "type": "array"
+                  },
+                  "fact_types": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 32,
+                    "title": "Fact Types",
+                    "type": "array"
+                  },
+                  "statuses": {
+                    "default": [
+                      "confirmed",
+                      "inference",
+                      "conflict",
+                      "review_required",
+                      "not_found",
+                      "route_candidate",
+                      "stale"
+                    ],
+                    "items": {
+                      "enum": [
+                        "confirmed",
+                        "inference",
+                        "conflict",
+                        "review_required",
+                        "not_found",
+                        "route_candidate",
+                        "stale"
+                      ],
+                      "type": "string"
+                    },
+                    "title": "Statuses",
+                    "type": "array"
+                  },
+                  "since": {
+                    "anyOf": [
+                      {
+                        "format": "date-time",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Since"
+                  },
+                  "until": {
+                    "anyOf": [
+                      {
+                        "format": "date-time",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Until"
+                  }
+                },
+                "title": "GetFactsQuery",
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "SIJI Agent Graph response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "schema_version": {
+                      "const": "siji.agent/v1",
+                      "default": "siji.agent/v1",
+                      "title": "Schema Version",
+                      "type": "string"
+                    },
+                    "operation": {
+                      "enum": [
+                        "search_entities",
+                        "get_entities",
+                        "list_changes",
+                        "expand_graph",
+                        "trace_paths",
+                        "get_facts",
+                        "get_evidence",
+                        "compare",
+                        "get_world_overview"
+                      ],
+                      "title": "Operation",
+                      "type": "string"
+                    },
+                    "request_id": {
+                      "title": "Request Id",
+                      "type": "string"
+                    },
+                    "delivery_id": {
+                      "format": "uuid",
+                      "title": "Delivery Id",
+                      "type": "string"
+                    },
+                    "session_id": {
+                      "format": "uuid",
+                      "title": "Session Id",
+                      "type": "string"
+                    },
+                    "snapshot_id": {
+                      "title": "Snapshot Id",
+                      "type": "string"
+                    },
+                    "data_as_of": {
+                      "title": "Data As Of",
+                      "type": "string"
+                    },
+                    "generated_at": {
+                      "format": "date-time",
+                      "title": "Generated At",
+                      "type": "string"
+                    },
+                    "status": {
+                      "enum": [
+                        "complete",
+                        "partial",
+                        "unsupported"
+                      ],
+                      "title": "Status",
+                      "type": "string"
+                    },
+                    "termination_reason": {
+                      "title": "Termination Reason",
+                      "type": "string"
+                    },
+                    "data": {
+                      "additionalProperties": true,
+                      "title": "Data",
+                      "type": "object"
+                    },
+                    "coverage": {
+                      "additionalProperties": true,
+                      "title": "Coverage",
+                      "type": "object"
+                    },
+                    "frontier": {
+                      "items": {
+                        "additionalProperties": true,
+                        "type": "object"
+                      },
+                      "title": "Frontier",
+                      "type": "array"
+                    },
+                    "pagination": {
+                      "additionalProperties": true,
+                      "title": "Pagination",
+                      "type": "object"
+                    },
+                    "usage": {
+                      "additionalProperties": true,
+                      "title": "Usage",
+                      "type": "object"
+                    },
+                    "response_hash": {
+                      "title": "Response Hash",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "operation",
+                    "request_id",
+                    "delivery_id",
+                    "session_id",
+                    "snapshot_id",
+                    "data_as_of",
+                    "generated_at",
+                    "status",
+                    "termination_reason",
+                    "data",
+                    "coverage",
+                    "pagination",
+                    "usage",
+                    "response_hash"
+                  ],
+                  "title": "AgentEnvelope",
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/agent/evidence/get": {
+      "post": {
+        "operationId": "siji_get_evidence",
+        "summary": "Reopen fact/relationship citations or exact source-version references. Citation permissions and source-content permissions are separate. Do not guess source URLs or treat metadata as full-text authorization.",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$defs": {
+                  "RelationshipRef": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "type": {
+                        "enum": [
+                          "participation",
+                          "placement",
+                          "company_relationship",
+                          "structure",
+                          "cross_chain"
+                        ],
+                        "title": "Type",
+                        "type": "string"
+                      },
+                      "facet": {
+                        "default": "subject",
+                        "enum": [
+                          "subject",
+                          "position"
+                        ],
+                        "title": "Facet",
+                        "type": "string"
+                      },
+                      "id": {
+                        "maxLength": 192,
+                        "minLength": 1,
+                        "title": "Id",
+                        "type": "string"
+                      },
+                      "chain_version_id": {
+                        "anyOf": [
+                          {
+                            "format": "uuid",
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "default": null,
+                        "title": "Chain Version Id"
+                      },
+                      "source_position_id": {
+                        "anyOf": [
+                          {
+                            "format": "uuid",
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "default": null,
+                        "title": "Source Position Id"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "id"
+                    ],
+                    "title": "RelationshipRef",
+                    "type": "object"
+                  },
+                  "SourceRef": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "source_id": {
+                        "maxLength": 192,
+                        "minLength": 1,
+                        "title": "Source Id",
+                        "type": "string"
+                      },
+                      "source_version_id": {
+                        "anyOf": [
+                          {
+                            "maxLength": 192,
+                            "minLength": 1,
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "default": null,
+                        "title": "Source Version Id"
+                      }
+                    },
+                    "required": [
+                      "source_id"
+                    ],
+                    "title": "SourceRef",
+                    "type": "object"
+                  },
+                  "WorkBudget": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "max_scanned_edges": {
+                        "default": 12000,
+                        "maximum": 100000,
+                        "minimum": 1,
+                        "title": "Max Scanned Edges",
+                        "type": "integer"
+                      },
+                      "max_expanded_states": {
+                        "default": 4000,
+                        "maximum": 20000,
+                        "minimum": 1,
+                        "title": "Max Expanded States",
+                        "type": "integer"
+                      },
+                      "deadline_ms": {
+                        "default": 8000,
+                        "maximum": 20000,
+                        "minimum": 10,
+                        "title": "Deadline Ms",
+                        "type": "integer"
+                      },
+                      "max_response_bytes": {
+                        "default": 262144,
+                        "maximum": 524288,
+                        "minimum": 8192,
+                        "title": "Max Response Bytes",
+                        "type": "integer"
+                      }
+                    },
+                    "title": "WorkBudget",
+                    "type": "object"
+                  }
+                },
+                "additionalProperties": false,
+                "properties": {
+                  "operation": {
+                    "const": "get_evidence",
+                    "default": "get_evidence",
+                    "title": "Operation",
+                    "type": "string"
+                  },
+                  "network_ids": {
+                    "default": [
+                      "net_aiinfra_23chain_global"
+                    ],
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 16,
+                    "minItems": 1,
+                    "title": "Network Ids",
+                    "type": "array"
+                  },
+                  "session_id": {
+                    "anyOf": [
+                      {
+                        "format": "uuid",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Session Id"
+                  },
+                  "cursor": {
+                    "anyOf": [
+                      {
+                        "maxLength": 8192,
+                        "minLength": 16,
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Cursor"
+                  },
+                  "projection": {
+                    "default": [
+                      "evidence_refs"
+                    ],
+                    "items": {
+                      "enum": [
+                        "identity",
+                        "graph_min",
+                        "research",
+                        "facts",
+                        "evidence_refs",
+                        "timeline"
+                      ],
+                      "type": "string"
+                    },
+                    "title": "Projection",
+                    "type": "array"
+                  },
+                  "limit": {
+                    "default": 50,
+                    "maximum": 500,
+                    "minimum": 1,
+                    "title": "Limit",
+                    "type": "integer"
+                  },
+                  "budget": {
+                    "$ref": "#/$defs/WorkBudget"
+                  },
+                  "fact_ids": {
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 128,
+                    "title": "Fact Ids",
+                    "type": "array"
+                  },
+                  "relationship_refs": {
+                    "items": {
+                      "$ref": "#/$defs/RelationshipRef"
+                    },
+                    "maxItems": 128,
+                    "title": "Relationship Refs",
+                    "type": "array"
+                  },
+                  "source_refs": {
+                    "items": {
+                      "$ref": "#/$defs/SourceRef"
+                    },
+                    "maxItems": 128,
+                    "title": "Source Refs",
+                    "type": "array"
+                  },
+                  "include": {
+                    "default": [
+                      "metadata",
+                      "locator"
+                    ],
+                    "items": {
+                      "enum": [
+                        "metadata",
+                        "locator",
+                        "short_excerpt"
+                      ],
+                      "type": "string"
+                    },
+                    "maxItems": 3,
+                    "minItems": 1,
+                    "title": "Include",
+                    "type": "array"
+                  }
+                },
+                "title": "GetEvidenceQuery",
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "SIJI Agent Graph response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "schema_version": {
+                      "const": "siji.agent/v1",
+                      "default": "siji.agent/v1",
+                      "title": "Schema Version",
+                      "type": "string"
+                    },
+                    "operation": {
+                      "enum": [
+                        "search_entities",
+                        "get_entities",
+                        "list_changes",
+                        "expand_graph",
+                        "trace_paths",
+                        "get_facts",
+                        "get_evidence",
+                        "compare",
+                        "get_world_overview"
+                      ],
+                      "title": "Operation",
+                      "type": "string"
+                    },
+                    "request_id": {
+                      "title": "Request Id",
+                      "type": "string"
+                    },
+                    "delivery_id": {
+                      "format": "uuid",
+                      "title": "Delivery Id",
+                      "type": "string"
+                    },
+                    "session_id": {
+                      "format": "uuid",
+                      "title": "Session Id",
+                      "type": "string"
+                    },
+                    "snapshot_id": {
+                      "title": "Snapshot Id",
+                      "type": "string"
+                    },
+                    "data_as_of": {
+                      "title": "Data As Of",
+                      "type": "string"
+                    },
+                    "generated_at": {
+                      "format": "date-time",
+                      "title": "Generated At",
+                      "type": "string"
+                    },
+                    "status": {
+                      "enum": [
+                        "complete",
+                        "partial",
+                        "unsupported"
+                      ],
+                      "title": "Status",
+                      "type": "string"
+                    },
+                    "termination_reason": {
+                      "title": "Termination Reason",
+                      "type": "string"
+                    },
+                    "data": {
+                      "additionalProperties": true,
+                      "title": "Data",
+                      "type": "object"
+                    },
+                    "coverage": {
+                      "additionalProperties": true,
+                      "title": "Coverage",
+                      "type": "object"
+                    },
+                    "frontier": {
+                      "items": {
+                        "additionalProperties": true,
+                        "type": "object"
+                      },
+                      "title": "Frontier",
+                      "type": "array"
+                    },
+                    "pagination": {
+                      "additionalProperties": true,
+                      "title": "Pagination",
+                      "type": "object"
+                    },
+                    "usage": {
+                      "additionalProperties": true,
+                      "title": "Usage",
+                      "type": "object"
+                    },
+                    "response_hash": {
+                      "title": "Response Hash",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "operation",
+                    "request_id",
+                    "delivery_id",
+                    "session_id",
+                    "snapshot_id",
+                    "data_as_of",
+                    "generated_at",
+                    "status",
+                    "termination_reason",
+                    "data",
+                    "coverage",
+                    "pagination",
+                    "usage",
+                    "response_hash"
+                  ],
+                  "title": "AgentEnvelope",
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/agent/compare": {
+      "post": {
+        "operationId": "siji_compare",
+        "summary": "Align explicit candidates' qualified commercial facts without choosing an investment winner. Missing values are unknown, not zero; periods and units remain explicit.",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$defs": {
+                  "EntityRef": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "type": {
+                        "enum": [
+                          "company",
+                          "product",
+                          "business",
+                          "position"
+                        ],
+                        "title": "Type",
+                        "type": "string"
+                      },
+                      "id": {
+                        "maxLength": 192,
+                        "minLength": 1,
+                        "title": "Id",
+                        "type": "string"
+                      },
+                      "chain_version_id": {
+                        "anyOf": [
+                          {
+                            "format": "uuid",
+                            "type": "string"
+                          },
+                          {
+                            "type": "null"
+                          }
+                        ],
+                        "default": null,
+                        "title": "Chain Version Id"
+                      }
+                    },
+                    "required": [
+                      "type",
+                      "id"
+                    ],
+                    "title": "EntityRef",
+                    "type": "object"
+                  },
+                  "WorkBudget": {
+                    "additionalProperties": false,
+                    "properties": {
+                      "max_scanned_edges": {
+                        "default": 12000,
+                        "maximum": 100000,
+                        "minimum": 1,
+                        "title": "Max Scanned Edges",
+                        "type": "integer"
+                      },
+                      "max_expanded_states": {
+                        "default": 4000,
+                        "maximum": 20000,
+                        "minimum": 1,
+                        "title": "Max Expanded States",
+                        "type": "integer"
+                      },
+                      "deadline_ms": {
+                        "default": 8000,
+                        "maximum": 20000,
+                        "minimum": 10,
+                        "title": "Deadline Ms",
+                        "type": "integer"
+                      },
+                      "max_response_bytes": {
+                        "default": 262144,
+                        "maximum": 524288,
+                        "minimum": 8192,
+                        "title": "Max Response Bytes",
+                        "type": "integer"
+                      }
+                    },
+                    "title": "WorkBudget",
+                    "type": "object"
+                  }
+                },
+                "additionalProperties": false,
+                "properties": {
+                  "operation": {
+                    "const": "compare",
+                    "default": "compare",
+                    "title": "Operation",
+                    "type": "string"
+                  },
+                  "network_ids": {
+                    "default": [
+                      "net_aiinfra_23chain_global"
+                    ],
+                    "items": {
+                      "type": "string"
+                    },
+                    "maxItems": 16,
+                    "minItems": 1,
+                    "title": "Network Ids",
+                    "type": "array"
+                  },
+                  "session_id": {
+                    "anyOf": [
+                      {
+                        "format": "uuid",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Session Id"
+                  },
+                  "cursor": {
+                    "anyOf": [
+                      {
+                        "maxLength": 8192,
+                        "minLength": 16,
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Cursor"
+                  },
+                  "projection": {
+                    "default": [
+                      "research"
+                    ],
+                    "items": {
+                      "enum": [
+                        "identity",
+                        "graph_min",
+                        "research",
+                        "facts",
+                        "evidence_refs",
+                        "timeline"
+                      ],
+                      "type": "string"
+                    },
+                    "title": "Projection",
+                    "type": "array"
+                  },
+                  "limit": {
+                    "default": 50,
+                    "maximum": 500,
+                    "minimum": 1,
+                    "title": "Limit",
+                    "type": "integer"
+                  },
+                  "budget": {
+                    "$ref": "#/$defs/WorkBudget"
+                  },
+                  "entity_refs": {
+                    "items": {
+                      "$ref": "#/$defs/EntityRef"
+                    },
+                    "maxItems": 20,
+                    "minItems": 2,
+                    "title": "Entity Refs",
+                    "type": "array"
+                  },
+                  "dimensions": {
+                    "default": [
+                      "commercial_progress"
+                    ],
+                    "items": {
+                      "enum": [
+                        "commercial_progress",
+                        "relationships",
+                        "facts",
+                        "evidence"
+                      ],
+                      "type": "string"
+                    },
+                    "maxItems": 4,
+                    "minItems": 1,
+                    "title": "Dimensions",
+                    "type": "array"
+                  },
+                  "since": {
+                    "anyOf": [
+                      {
+                        "format": "date-time",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Since"
+                  },
+                  "until": {
+                    "anyOf": [
+                      {
+                        "format": "date-time",
+                        "type": "string"
+                      },
+                      {
+                        "type": "null"
+                      }
+                    ],
+                    "default": null,
+                    "title": "Until"
+                  }
+                },
+                "required": [
+                  "entity_refs"
+                ],
+                "title": "CompareQuery",
+                "type": "object"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "SIJI Agent Graph response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": false,
+                  "properties": {
+                    "schema_version": {
+                      "const": "siji.agent/v1",
+                      "default": "siji.agent/v1",
+                      "title": "Schema Version",
+                      "type": "string"
+                    },
+                    "operation": {
+                      "enum": [
+                        "search_entities",
+                        "get_entities",
+                        "list_changes",
+                        "expand_graph",
+                        "trace_paths",
+                        "get_facts",
+                        "get_evidence",
+                        "compare",
+                        "get_world_overview"
+                      ],
+                      "title": "Operation",
+                      "type": "string"
+                    },
+                    "request_id": {
+                      "title": "Request Id",
+                      "type": "string"
+                    },
+                    "delivery_id": {
+                      "format": "uuid",
+                      "title": "Delivery Id",
+                      "type": "string"
+                    },
+                    "session_id": {
+                      "format": "uuid",
+                      "title": "Session Id",
+                      "type": "string"
+                    },
+                    "snapshot_id": {
+                      "title": "Snapshot Id",
+                      "type": "string"
+                    },
+                    "data_as_of": {
+                      "title": "Data As Of",
+                      "type": "string"
+                    },
+                    "generated_at": {
+                      "format": "date-time",
+                      "title": "Generated At",
+                      "type": "string"
+                    },
+                    "status": {
+                      "enum": [
+                        "complete",
+                        "partial",
+                        "unsupported"
+                      ],
+                      "title": "Status",
+                      "type": "string"
+                    },
+                    "termination_reason": {
+                      "title": "Termination Reason",
+                      "type": "string"
+                    },
+                    "data": {
+                      "additionalProperties": true,
+                      "title": "Data",
+                      "type": "object"
+                    },
+                    "coverage": {
+                      "additionalProperties": true,
+                      "title": "Coverage",
+                      "type": "object"
+                    },
+                    "frontier": {
+                      "items": {
+                        "additionalProperties": true,
+                        "type": "object"
+                      },
+                      "title": "Frontier",
+                      "type": "array"
+                    },
+                    "pagination": {
+                      "additionalProperties": true,
+                      "title": "Pagination",
+                      "type": "object"
+                    },
+                    "usage": {
+                      "additionalProperties": true,
+                      "title": "Usage",
+                      "type": "object"
+                    },
+                    "response_hash": {
+                      "title": "Response Hash",
+                      "type": "string"
+                    }
+                  },
+                  "required": [
+                    "operation",
+                    "request_id",
+                    "delivery_id",
+                    "session_id",
+                    "snapshot_id",
+                    "data_as_of",
+                    "generated_at",
+                    "status",
+                    "termination_reason",
+                    "data",
+                    "coverage",
+                    "pagination",
+                    "usage",
+                    "response_hash"
+                  ],
+                  "title": "AgentEnvelope",
+                  "type": "object"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "ApiKeyAuth": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-API-Key"
       }
     }
   }
